@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Amplify</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800;900&display=swap" />
 <style>
   :root {
     --amplify-red: #fb2623;
@@ -167,6 +167,46 @@
     text-transform: uppercase;
     color: var(--amplify-black);
   }
+
+  .body-text {
+    margin: 0.85rem 0 0;
+    max-width: 56ch;
+    font-family: "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+    line-height: 1.6;
+    color: var(--amplify-black);
+  }
+
+  .service-list {
+    margin: 0.9rem 0 0;
+    padding: 0;
+    max-width: 56ch;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .service-list li {
+    position: relative;
+    padding-left: 1.3em;
+    font-family: "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-weight: 600;
+    font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+    line-height: 1.5;
+    color: var(--amplify-black);
+  }
+
+  .service-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.68em;
+    width: 0.65em;
+    height: 0.14em;
+    background-color: var(--amplify-red);
+  }
 </style>
 </head>
 <body>
@@ -177,7 +217,13 @@
   <main>
     <h1 class="headline">Bli hörd på marknaden<br class="mobile-break" /> <span class="highlight">amplifiera din marknadsvolym</span></h1>
     <h2 class="section-title">Vad vi gör för ditt företag</h2>
+    <p class="body-text">Gör en makeover på ditt varumärke och exponerar dig till en större marknad.</p>
     <h2 class="section-title">Våra tjänster</h2>
+    <ul class="service-list">
+      <li>Skapande av eller förbättrande av befintlig hemsida</li>
+      <li>Grafisk design (flygblad, posters, visitkort mm)</li>
+      <li>Musikproduktion och ljuddesign</li>
+    </ul>
     <h2 class="section-title">Ett företag innan och efter amplify</h2>
     <h2 class="section-title">Intresserad? Kontakta oss.</h2>
   </main>
