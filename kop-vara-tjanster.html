@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Köp våra tjänster</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700;800;900&display=swap" />
+<style>
+  :root {
+    --amplify-red: #fb2623;
+    --amplify-white: #ffffff;
+    --amplify-black: #0d0d0d;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+  }
+
+  body {
+    background-color: var(--amplify-white);
+  }
+
+  header,
+  footer {
+    background-color: var(--amplify-red);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: clamp(0.6rem, 2vh, 1.1rem);
+    padding-inline: 16px;
+  }
+
+  .logo-link {
+    display: block;
+    line-height: 0;
+    width: min(50vw, 210px);
+    aspect-ratio: 612 / 280;
+    overflow: hidden;
+    transition: transform 0.25s ease;
+  }
+
+  .logo-link:hover {
+    transform: translateY(-4px) scale(1.04);
+  }
+
+  .logo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  .nav-link {
+    position: relative;
+    font-family: "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    font-size: clamp(0.75rem, 1.6vw, 0.95rem);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--amplify-black);
+    white-space: nowrap;
+    padding-bottom: 0.1em;
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 0.08em;
+    background-color: var(--amplify-black);
+    transition: width 0.3s ease;
+  }
+
+  .nav-link:hover::after {
+    width: 100%;
+  }
+
+  main {
+    padding: clamp(2rem, 6vh, 4rem) clamp(1.5rem, 6vw, 4rem);
+  }
+
+  .page-title {
+    margin: 0 0 clamp(1.25rem, 4vh, 2rem);
+    font-family: "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-weight: 900;
+    font-size: clamp(1.5rem, 4.5vw, 2.75rem);
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    color: var(--amplify-black);
+  }
+
+  .body-text {
+    margin: 0 0 clamp(2rem, 6vh, 3rem);
+    max-width: 56ch;
+    font-family: "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+    line-height: 1.6;
+    color: var(--amplify-black);
+  }
+
+  .service-list {
+    margin: 0;
+    padding: 0;
+    max-width: 640px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .service-list li {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.95rem 0;
+    border-bottom: 1px solid #f0d7d5;
+    font-family: "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-weight: 600;
+    font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+    line-height: 1.4;
+    color: var(--amplify-black);
+  }
+
+  .service-list li:first-child {
+    padding-top: 0;
+  }
+
+  .service-list .price-tag {
+    flex: 0 0 auto;
+    font-weight: 800;
+    font-size: 0.8rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--amplify-red);
+    white-space: nowrap;
+  }
+
+  .cta-button {
+    display: inline-block;
+    margin: clamp(2.5rem, 7vh, 4rem) 0 0;
+    background-color: var(--amplify-black);
+    color: var(--amplify-white);
+    font-family: "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-weight: 800;
+    font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.85em 1.6em;
+    border-radius: 0.3em;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px -8px rgba(13, 13, 13, 0.45);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .logo-link,
+    .nav-link::after,
+    .cta-button {
+      transition: none;
+    }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <a class="logo-link" href="index.html"><img class="logo" src="bild__1_-removebg-preview.png" alt="Amplify" /></a>
+    <a class="nav-link" href="index.html">Hem</a>
+  </header>
+  <main>
+    <h1 class="page-title">Köp våra tjänster</h1>
+    <p class="body-text">Välj vad ditt företag behöver — hör av dig så sätter vi ihop ett upplägg som passar er.</p>
+
+    <ul class="service-list">
+      <li><span>Skapande av eller förbättrande av befintlig hemsida</span><span class="price-tag">Offert</span></li>
+      <li><span>Branding: skapande/förbättring av logotyper, produkter, skyltning mm</span><span class="price-tag">Offert</span></li>
+      <li><span>Grafisk design (flygblad, posters, visitkort mm)</span><span class="price-tag">Offert</span></li>
+      <li><span>Musikproduktion och ljuddesign</span><span class="price-tag">Offert</span></li>
+      <li><span>Videoredigering</span><span class="price-tag">Offert</span></li>
+      <li><span>Fullständigt skapande av reklamfilmer</span><span class="price-tag">Offert</span></li>
+      <li><span>Skapar professionella konton på sociala medier</span><span class="price-tag">Offert</span></li>
+      <li><span>Skapar custom epostadresser</span><span class="price-tag">Offert</span></li>
+    </ul>
+
+    <a class="cta-button" href="vi-pa-amplify.html">Kontakta oss</a>
+  </main>
+  <footer></footer>
+</body>
+</html>
