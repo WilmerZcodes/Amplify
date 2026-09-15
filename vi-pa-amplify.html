@@ -31,12 +31,17 @@
   header,
   footer {
     background-color: var(--amplify-red);
+    padding-block: clamp(0.6rem, 2vh, 1.1rem);
+  }
+
+  .header-inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    padding-block: clamp(0.6rem, 2vh, 1.1rem);
-    padding-inline: 16px;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: clamp(16px, 4vw, 48px);
   }
 
   .logo-link {
@@ -96,6 +101,8 @@
   }
 
   main {
+    max-width: 1200px;
+    margin-inline: auto;
     padding: clamp(2rem, 6vh, 4rem) clamp(1.5rem, 6vw, 4rem);
   }
 
@@ -207,8 +214,10 @@
 </head>
 <body>
   <header>
-    <a class="logo-link" href="index.html"><img class="logo" src="bild__1_-removebg-preview.png" alt="Amplify" /></a>
-    <a class="nav-link" href="index.html">Tillbaka till startsidan</a>
+    <div class="header-inner">
+      <a class="logo-link" href="index.html"><img class="logo" src="bild__1_-removebg-preview.png" alt="Amplify" /></a>
+      <a class="nav-link" href="index.html">Tillbaka till startsidan</a>
+    </div>
   </header>
   <main>
     <h1 class="page-title">Vi på Amplify</h1>
