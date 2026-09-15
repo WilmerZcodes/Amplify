@@ -202,6 +202,62 @@
     color: var(--amplify-black);
   }
 
+  .feature-box {
+    position: relative;
+    margin: clamp(3rem, 8vh, 5rem) 0 0;
+    padding: clamp(1.5rem, 5vw, 2.5rem);
+    border-radius: clamp(1rem, 3vw, 1.75rem);
+  }
+
+  .feature-box-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .feature-box-content .section-title {
+    margin-top: 0;
+  }
+
+  .spin-border {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    overflow: hidden;
+    padding: 3px;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  .spin-border::before {
+    content: "";
+    position: absolute;
+    inset: -50%;
+    background: conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      transparent 268deg,
+      var(--amplify-black) 300deg,
+      var(--amplify-red) 328deg,
+      var(--amplify-red) 338deg,
+      transparent 360deg
+    );
+    animation: spin-border-rotate 4s linear infinite;
+  }
+
+  @keyframes spin-border-rotate {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .spin-border::before {
+      animation: none;
+    }
+  }
+
   .service-list {
     margin: 0.9rem 0 0;
     padding: 0;
@@ -287,8 +343,13 @@
   </header>
   <main>
     <h1 class="headline">Bli hörd på marknaden,<br class="mobile-break" /> <span class="highlight">amplifiera din marknadsvolym</span></h1>
-    <h2 class="section-title">Vad vi gör för ditt företag</h2>
-    <p class="body-text">Gör en makeover på ditt varumärke och exponerar dig till en större marknad.</p>
+    <div class="feature-box">
+      <div class="spin-border"></div>
+      <div class="feature-box-content">
+        <h2 class="section-title">Vad vi gör för ditt företag</h2>
+        <p class="body-text">Gör en makeover på ditt varumärke och exponerar dig till en större marknad.</p>
+      </div>
+    </div>
     <h2 class="section-title">Våra tjänster</h2>
     <ul class="service-list">
       <li>Skapande av eller förbättrande av befintlig hemsida</li>
