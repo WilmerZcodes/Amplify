@@ -10,7 +10,6 @@
     --amplify-red: #fb2623;
     --amplify-white: #ffffff;
     --amplify-black: #0d0d0d;
-    --amplify-cushion: #ffe5e3;
     --amplify-grey: #f3eeee;
     --amplify-grey-line: #d9cfcf;
   }
@@ -26,13 +25,34 @@
   }
 
   body {
-    background-color: var(--amplify-cushion);
+    background-color: var(--amplify-white);
   }
 
   header,
   footer {
+    position: relative;
     background-color: var(--amplify-red);
     padding-block: clamp(0.6rem, 2vh, 1.1rem);
+  }
+
+  header::after,
+  footer::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: clamp(24px, 5vh, 48px);
+    pointer-events: none;
+  }
+
+  header::after {
+    top: 100%;
+    background: linear-gradient(to bottom, var(--amplify-red), transparent);
+  }
+
+  footer::before {
+    bottom: 100%;
+    background: linear-gradient(to top, var(--amplify-red), transparent);
   }
 
   .header-inner {
