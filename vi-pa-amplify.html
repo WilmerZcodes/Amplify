@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vi på Amplify</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&display=swap" />
+<style>
+  :root {
+    --amplify-red: #fb2623;
+    --amplify-white: #ffffff;
+    --amplify-black: #0d0d0d;
+    --amplify-grey: #f3eeee;
+    --amplify-grey-line: #d9cfcf;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+  }
+
+  body {
+    background-color: var(--amplify-white);
+  }
+
+  header,
+  footer {
+    background-color: var(--amplify-red);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: clamp(1.25rem, 4vh, 2.5rem);
+    padding-inline: 16px;
+  }
+
+  .logo {
+    width: min(60vw, 260px);
+    height: auto;
+    display: block;
+  }
+
+  .nav-link {
+    font-family: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    font-weight: 700;
+    font-size: clamp(0.75rem, 1.6vw, 0.95rem);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--amplify-black);
+    border-bottom: 0.08em solid var(--amplify-black);
+    white-space: nowrap;
+    padding-bottom: 0.1em;
+  }
+
+  .nav-link:hover {
+    opacity: 0.7;
+  }
+
+  main {
+    padding: clamp(2rem, 6vh, 4rem) clamp(1.5rem, 6vw, 4rem);
+  }
+
+  .page-title {
+    margin: 0 0 clamp(2rem, 6vh, 3.5rem);
+    font-family: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    font-weight: 800;
+    font-size: clamp(1.5rem, 4.5vw, 2.75rem);
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    color: var(--amplify-black);
+  }
+
+  .section-title {
+    margin: 0 0 1.25rem;
+    font-family: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    font-weight: 700;
+    font-size: clamp(1.05rem, 2.6vw, 1.4rem);
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    color: var(--amplify-black);
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(1rem, 3vw, 1.75rem);
+    max-width: 640px;
+  }
+
+  @media (max-width: 480px) {
+    .team-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .team-photo {
+    aspect-ratio: 4 / 5;
+    background-color: var(--amplify-grey);
+    border: 1px dashed var(--amplify-grey-line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #9c8f8f;
+  }
+
+  .contact {
+    margin-top: clamp(3rem, 8vh, 5rem);
+    max-width: 480px;
+  }
+
+  .contact-row {
+    display: flex;
+    align-items: baseline;
+    gap: 1.25rem;
+    padding-block: 0.9rem;
+    border-bottom: 1px solid var(--amplify-grey-line);
+  }
+
+  .contact-label {
+    flex: 0 0 6.5rem;
+    font-family: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--amplify-black);
+  }
+
+  .contact-value {
+    flex: 1;
+    font-family: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    font-size: 0.85rem;
+    color: #9c8f8f;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <img class="logo" src="bild.png" alt="Amplify" />
+    <a class="nav-link" href="index.html">Hem</a>
+  </header>
+  <main>
+    <h1 class="page-title">Vi på Amplify</h1>
+
+    <h2 class="section-title">Teamet</h2>
+    <div class="team-grid">
+      <div class="team-photo">Bild 1</div>
+      <div class="team-photo">Bild 2</div>
+      <div class="team-photo">Bild 3</div>
+      <div class="team-photo">Bild 4</div>
+    </div>
+
+    <div class="contact">
+      <h2 class="section-title">Kontakt</h2>
+      <div class="contact-row">
+        <span class="contact-label">E-post</span>
+        <span class="contact-value">—</span>
+      </div>
+      <div class="contact-row">
+        <span class="contact-label">Telefon</span>
+        <span class="contact-value">—</span>
+      </div>
+      <div class="contact-row">
+        <span class="contact-label">Adress</span>
+        <span class="contact-value">—</span>
+      </div>
+    </div>
+  </main>
+  <footer></footer>
+</body>
+</html>
