@@ -11,6 +11,7 @@
     --amplify-white: #ffffff;
     --amplify-black: #0d0d0d;
     --amplify-seam: #feb3b2;
+    --amplify-page-bg: #f4f3ee;
   }
 
   * {
@@ -24,7 +25,7 @@
   }
 
   body {
-    background-color: var(--amplify-white);
+    background-color: var(--amplify-page-bg);
   }
 
   header,
@@ -214,7 +215,7 @@
   .feature-box {
     position: relative;
     margin: clamp(3rem, 8vh, 5rem) 0 0;
-    padding: clamp(1.5rem, 5vw, 2.5rem);
+    padding: clamp(1.5rem, 5vw, 2.5rem) clamp(1.5rem, 5vw, 2.5rem) clamp(1.5rem, 5vw, 2.5rem) 0;
     border-radius: clamp(1rem, 3vw, 1.75rem);
   }
 
@@ -246,10 +247,11 @@
     background: conic-gradient(
       from 0deg,
       transparent 0deg,
-      transparent 268deg,
-      var(--amplify-black) 300deg,
-      var(--amplify-red) 328deg,
-      var(--amplify-red) 338deg,
+      transparent 25deg,
+      var(--amplify-black) 70deg,
+      var(--amplify-red) 190deg,
+      var(--amplify-red) 320deg,
+      transparent 345deg,
       transparent 360deg
     );
     animation: spin-border-rotate 4s linear infinite;
@@ -338,6 +340,50 @@
   .contact-link:hover::after {
     width: 100%;
   }
+
+  .steps-rail {
+    position: relative;
+    counter-reset: step;
+    border-left: 2px solid rgba(13, 13, 13, 0.18);
+    padding-left: clamp(2rem, 6vw, 2.75rem);
+  }
+
+  .step-heading {
+    position: relative;
+  }
+
+  .step-heading::before {
+    counter-increment: step;
+    content: counter(step);
+    position: absolute;
+    left: calc(-1 * (clamp(2rem, 6vw, 2.75rem) + 0.95rem));
+    top: 0;
+    width: 1.9rem;
+    height: 1.9rem;
+    border-radius: 50%;
+    background-color: var(--amplify-red);
+    color: var(--amplify-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-weight: 800;
+    font-size: 0.85rem;
+    box-shadow: 0 0 0 5px var(--amplify-page-bg);
+  }
+
+  @media (max-width: 480px) {
+    .steps-rail {
+      padding-left: 2.1rem;
+    }
+
+    .step-heading::before {
+      left: calc(-1 * (2.1rem + 0.8rem));
+      width: 1.6rem;
+      height: 1.6rem;
+      font-size: 0.75rem;
+    }
+  }
 </style>
 </head>
 <body>
@@ -352,27 +398,29 @@
   </header>
   <main>
     <h1 class="headline">Bli hörd på marknaden,<br class="mobile-break" /> <span class="highlight">amplifiera din marknadsvolym</span></h1>
-    <div class="feature-box">
-      <div class="spin-border"></div>
-      <div class="feature-box-content">
-        <h2 class="section-title">Vad vi gör för ditt företag</h2>
-        <p class="body-text">Gör en makeover på ditt varumärke och exponerar dig till en större marknad.</p>
+    <div class="steps-rail">
+      <div class="feature-box">
+        <div class="spin-border"></div>
+        <div class="feature-box-content">
+          <h2 class="section-title step-heading">Vad vi gör för ditt företag</h2>
+          <p class="body-text">Gör en makeover på ditt varumärke och exponerar dig till en större marknad.</p>
+        </div>
       </div>
-    </div>
-    <h2 class="section-title">Våra tjänster</h2>
-    <ul class="service-list">
-      <li>Skapande av eller förbättrande av befintlig hemsida</li>
-      <li>Branding: skapande/förbättring av logotyper, produkter, skyltning mm</li>
-      <li>Grafisk design (flygblad, posters, visitkort mm)</li>
-      <li>Musikproduktion och ljuddesign</li>
-      <li>Videoredigering</li>
-      <li>Fullständigt skapande av reklamfilmer</li>
-      <li>Skapar professionella konton på sociala medier</li>
-      <li>Skapar custom epostadresser</li>
-    </ul>
-    <h2 class="section-title">Ett företag innan och efter amplify</h2>
+      <h2 class="section-title step-heading">Våra tjänster</h2>
+      <ul class="service-list">
+        <li>Skapande av eller förbättrande av befintlig hemsida</li>
+        <li>Branding: skapande/förbättring av logotyper, produkter, skyltning mm</li>
+        <li>Grafisk design (flygblad, posters, visitkort mm)</li>
+        <li>Musikproduktion och ljuddesign</li>
+        <li>Videoredigering</li>
+        <li>Fullständigt skapande av reklamfilmer</li>
+        <li>Skapar professionella konton på sociala medier</li>
+        <li>Skapar custom epostadresser</li>
+      </ul>
+      <h2 class="section-title step-heading">Ett företag innan och efter amplify</h2>
 
-    <h2 class="section-title"><a class="contact-link" href="vi-pa-amplify.html">Intresserad? Kontakta oss.</a></h2>
+      <h2 class="section-title step-heading"><a class="contact-link" href="vi-pa-amplify.html">Intresserad? Kontakta oss.</a></h2>
+    </div>
 
     <a class="cta-button" href="kop-vara-tjanster.html">Köp våra tjänster</a>
   </main>
