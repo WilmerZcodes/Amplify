@@ -7,6 +7,7 @@
 <style>
   :root {
     --amplify-red: #fb2623;
+    --amplify-white: #ffffff;
   }
 
   * {
@@ -16,25 +17,31 @@
   html, body {
     margin: 0;
     padding: 0;
-    height: 100%;
+    min-height: 100%;
   }
 
   body {
+    background-color: var(--amplify-white);
+  }
+
+  header {
     background-color: var(--amplify-red);
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: clamp(2rem, 6vh, 5rem);
+    justify-content: center;
+    padding-block: clamp(1.25rem, 4vh, 2.5rem);
+    padding-inline: 16px;
   }
 
   .logo {
-    width: min(90vw, 480px);
+    width: min(60vw, 260px);
     height: auto;
     display: block;
   }
 </style>
 </head>
 <body>
-  <img class="logo" src="bild.png" alt="Amplify" />
+  <header>
+    <img class="logo" src="bild.png" alt="Amplify" />
+  </header>
 </body>
 </html>
