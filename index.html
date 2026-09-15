@@ -91,6 +91,10 @@
     .nav-link::after {
       transition: none;
     }
+
+    .highlight {
+      animation: none;
+    }
   }
 
   main {
@@ -128,11 +132,30 @@
     }
   }
 
-  .headline u {
+  .highlight {
+    display: inline-block;
     font-weight: 900;
-    text-decoration-color: var(--amplify-black);
-    text-decoration-thickness: 0.08em;
-    text-underline-offset: 0.2em;
+    background-color: var(--amplify-black);
+    color: var(--amplify-white);
+    padding: 0.05em 0.3em;
+    border-radius: 0.15em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    animation: highlight-in 0.7s 0.15s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes highlight-in {
+    0% {
+      opacity: 0;
+      transform: translateY(0.4em) scale(0.92);
+    }
+    60% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
   }
 
   .section-title {
@@ -152,7 +175,7 @@
     <a class="nav-link" href="vi-pa-amplify.html">Vi på Amplify</a>
   </header>
   <main>
-    <h1 class="headline">Bli hörd på marknaden<br class="mobile-break" /> - <u>amplifiera din marknadsvolym</u></h1>
+    <h1 class="headline">Bli hörd på marknaden<br class="mobile-break" /> - <span class="highlight">amplifiera din marknadsvolym</span></h1>
     <h2 class="section-title">Vad vi gör för ditt företag</h2>
     <h2 class="section-title">Våra tjänster</h2>
     <h2 class="section-title">Ett företag innan och efter amplify</h2>
