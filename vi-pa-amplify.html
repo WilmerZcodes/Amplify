@@ -102,16 +102,15 @@
   .team-photo {
     aspect-ratio: 4 / 5;
     background-color: var(--amplify-grey);
-    border: 1px dashed var(--amplify-grey-line);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
-    font-weight: 700;
-    font-size: 0.85rem;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    color: #9c8f8f;
+    border: 1px solid var(--amplify-grey-line);
+    overflow: hidden;
+  }
+
+  .team-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
 
   .contact {
@@ -155,10 +154,10 @@
 
     <h2 class="section-title">Teamet</h2>
     <div class="team-grid">
-      <div class="team-photo">Bild 1</div>
-      <div class="team-photo">Bild 2</div>
-      <div class="team-photo">Bild 3</div>
-      <div class="team-photo">Bild 4</div>
+      <div class="team-photo"><img src="a54681e1-6e5a-44dd-b637-0f3d8ba230bd.png" alt="Teammedlem" /></div>
+      <div class="team-photo"><img src="a54681e1-6e5a-44dd-b637-0f3d8ba230bd.png" alt="Teammedlem" /></div>
+      <div class="team-photo"><img src="a54681e1-6e5a-44dd-b637-0f3d8ba230bd.png" alt="Teammedlem" /></div>
+      <div class="team-photo"><img src="a54681e1-6e5a-44dd-b637-0f3d8ba230bd.png" alt="Teammedlem" /></div>
     </div>
 
     <div class="contact">
