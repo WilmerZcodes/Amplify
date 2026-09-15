@@ -81,14 +81,18 @@
     white-space: nowrap;
   }
 
+  .mobile-break {
+    display: none;
+  }
+
   @media (max-width: 640px) {
     .headline {
       white-space: normal;
       font-size: clamp(0.9rem, 4.6vw, 1.3rem);
     }
 
-    .headline .dash {
-      display: block;
+    .mobile-break {
+      display: inline;
     }
 
     .section-title {
@@ -120,7 +124,7 @@
     <a class="nav-link" href="vi-pa-amplify.html">Vi på Amplify</a>
   </header>
   <main>
-    <h1 class="headline">Bli hörd på marknaden <span class="dash">-</span> <u>amplifiera din marknadsvolym</u></h1>
+    <h1 class="headline">Bli hörd på marknaden<br class="mobile-break" /> - <u>amplifiera din marknadsvolym</u></h1>
     <h2 class="section-title">Vad vi gör för ditt företag</h2>
     <h2 class="section-title">Våra tjänster</h2>
     <h2 class="section-title">Ett företag innan och efter amplify</h2>
