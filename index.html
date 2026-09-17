@@ -169,7 +169,7 @@
     background-color: var(--amplify-black);
     transform: scaleX(0);
     transform-origin: left center;
-    transition: transform 0.35s ease;
+    transition: transform 0.2s ease;
   }
 
   .lead-underline-bar.is-filled {
@@ -557,7 +557,7 @@
         for (var i = 0; i < bars.length; i++) {
           if (token !== sequenceToken) return;
           bars[i].classList.add('is-filled');
-          await wait(350);
+          await wait(200);
         }
         if (token === sequenceToken) {
           headline.classList.add('lead-underline-done');
