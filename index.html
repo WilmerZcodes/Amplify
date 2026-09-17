@@ -212,6 +212,87 @@
     }
   }
 
+  .doodle-layer {
+    position: fixed;
+    inset: 0;
+    overflow: visible;
+    pointer-events: none;
+    z-index: 60;
+  }
+
+  .doodle-arrow {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    offset-distance: 0%;
+    offset-rotate: auto;
+  }
+
+  .doodle-arrow.is-active {
+    opacity: 1;
+    offset-distance: 100%;
+    transition: offset-distance 1.1s cubic-bezier(0.3, 0.05, 0.25, 1);
+  }
+
+  .doodle-arrow-icon {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translate(-50%, -50%) rotate(0deg);
+    filter: drop-shadow(0 2px 3px rgba(13, 13, 13, 0.25));
+  }
+
+  .doodle-arrow.is-active .doodle-arrow-icon {
+    animation: doodle-spin 1.1s cubic-bezier(0.3, 0.05, 0.25, 1);
+  }
+
+  @keyframes doodle-spin {
+    0% {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+    65% {
+      transform: translate(-50%, -50%) rotate(1080deg);
+    }
+    100% {
+      transform: translate(-50%, -50%) rotate(1080deg);
+    }
+  }
+
+  .doodle-caption {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translate(-50%, calc(-100% + 8px)) scale(0.85);
+    opacity: 0;
+    font-family: "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--amplify-red);
+    white-space: nowrap;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .doodle-caption.is-visible {
+    opacity: 1;
+    transform: translate(-50%, -100%) scale(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .doodle-arrow.is-active {
+      transition: none;
+    }
+
+    .doodle-arrow.is-active .doodle-arrow-icon {
+      animation: none;
+    }
+  }
+
   .section-title {
     margin: clamp(3rem, 8vh, 5rem) 0 0;
     font-family: "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
@@ -226,7 +307,7 @@
     margin: 0.85rem 0 0;
     max-width: 40ch;
     font-family: "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    font-weight: 500;
+    font-weight: 600;
     font-size: clamp(1.35rem, 3.2vw, 2rem);
     line-height: 1.4;
     color: var(--amplify-black);
@@ -445,6 +526,16 @@
     <a class="cta-button" href="kop-vara-tjanster.html">Köp våra tjänster</a>
   </main>
   <footer></footer>
+
+  <div class="doodle-layer" aria-hidden="true">
+    <div class="doodle-arrow">
+      <svg class="doodle-arrow-icon" viewBox="0 0 24 24" width="34" height="34">
+        <path d="M2 12 L19 12 M13 6 L19 12 L13 18" fill="none" stroke="var(--amplify-red)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </div>
+    <div class="doodle-caption">Så här går det till</div>
+  </div>
+
   <script>
     (function () {
       var rail = document.querySelector('.steps-rail');
@@ -579,6 +670,113 @@
         resizeTimer = setTimeout(function () {
           if (bars.length) reset();
         }, 150);
+      });
+    })();
+
+    (function () {
+      var highlight = document.querySelector('.highlight');
+      var badge1 = document.querySelector('.steps-rail .step-heading');
+      var arrow = document.querySelector('.doodle-arrow');
+      var caption = document.querySelector('.doodle-caption');
+      if (!highlight || !badge1 || !arrow || !caption) return;
+
+      var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var TRAVEL_MS = 1100;
+      var token = 0;
+
+      function badgeCenter() {
+        var rect = badge1.getBoundingClientRect();
+        var cs = getComputedStyle(badge1, '::before');
+        var w = parseFloat(cs.width) || 30;
+        var h = parseFloat(cs.height) || 30;
+        var left = parseFloat(cs.left) || -50;
+        return { x: rect.left + left + w / 2, y: rect.top + h / 2, r: w / 2, headingTop: rect.top };
+      }
+
+      function buildPath() {
+        var hRect = highlight.getBoundingClientRect();
+        var x0 = hRect.right - 6;
+        var y0 = hRect.top + hRect.height / 2;
+        var target = badgeCenter();
+
+        var loopX = x0 + 95;
+        var midX = x0 + (target.x - x0) * 0.45 + 70;
+        var midY = y0 + (target.y - y0) * 0.45 - 30;
+        var ctrlX = target.x + 90;
+        var ctrlY = target.y - 55;
+
+        var dx = target.x - ctrlX;
+        var dy = target.y - ctrlY;
+        var dist = Math.sqrt(dx * dx + dy * dy) || 1;
+        var pullback = target.r + 18;
+        var x1 = target.x - (dx / dist) * pullback;
+        var y1 = target.y - (dy / dist) * pullback;
+
+        var d = 'M ' + x0 + ' ' + y0 +
+          ' C ' + loopX + ' ' + (y0 - 65) + ', ' + loopX + ' ' + (y0 + 65) + ', ' + x0 + ' ' + y0 +
+          ' C ' + (x0 + 30) + ' ' + (y0 + 85) + ', ' + midX + ' ' + (midY + 60) + ', ' + midX + ' ' + midY +
+          ' C ' + midX + ' ' + (midY - 70) + ', ' + ctrlX + ' ' + ctrlY + ', ' + x1 + ' ' + y1;
+
+        arrow.style.offsetPath = 'path("' + d + '")';
+
+        var captionX = target.x;
+        var captionY = target.headingTop - 10;
+        caption.style.left = captionX + 'px';
+        caption.style.top = captionY + 'px';
+      }
+
+      function clampCaption() {
+        var capRect = caption.getBoundingClientRect();
+        var margin = 8;
+        var shift = 0;
+        if (capRect.left < margin) shift = margin - capRect.left;
+        else if (capRect.right > window.innerWidth - margin) shift = (window.innerWidth - margin) - capRect.right;
+        if (shift !== 0) {
+          var current = parseFloat(caption.style.left) || 0;
+          caption.style.left = (current + shift) + 'px';
+        }
+      }
+
+      function play() {
+        buildPath();
+        var current = ++token;
+        arrow.classList.remove('is-active');
+        caption.classList.remove('is-visible');
+
+        if (reduceMotion) {
+          arrow.classList.add('is-active');
+          caption.classList.add('is-visible');
+          clampCaption();
+          return;
+        }
+
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            if (current !== token) return;
+            arrow.classList.add('is-active');
+          });
+        });
+
+        setTimeout(function () {
+          if (current !== token) return;
+          caption.classList.add('is-visible');
+          setTimeout(function () {
+            if (current === token) clampCaption();
+          }, 320);
+        }, TRAVEL_MS);
+      }
+
+      function stop() {
+        token++;
+        arrow.classList.remove('is-active');
+        caption.classList.remove('is-visible');
+      }
+
+      highlight.addEventListener('mouseenter', play);
+      highlight.addEventListener('mouseleave', stop);
+
+      window.addEventListener('resize', function () {
+        if (arrow.classList.contains('is-active')) buildPath();
       });
     })();
   </script>
