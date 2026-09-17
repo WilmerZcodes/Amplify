@@ -121,7 +121,7 @@
     .nav-link::after,
     .cta-button,
     .step-heading::after,
-    .headline-lead::after,
+    .headline-lead,
     .highlight {
       transition: none;
     }
@@ -157,22 +157,15 @@
   }
 
   .headline-lead {
-    position: relative;
+    text-decoration-line: underline;
+    text-decoration-color: transparent;
+    text-decoration-thickness: 4px;
+    text-underline-offset: 0.12em;
+    transition: text-decoration-color 0.5s ease;
   }
 
-  .headline-lead::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 1.28em;
-    width: 0;
-    height: 4px;
-    background-color: var(--amplify-black);
-    transition: width 0.5s ease;
-  }
-
-  .headline-lead:hover::after {
-    width: 100%;
+  .headline-lead:hover {
+    text-decoration-color: var(--amplify-black);
   }
 
   .highlight {
@@ -482,15 +475,19 @@
         setTimeout(function () { h.classList.add('pop-done'); }, 460);
       }
 
+      var POP_DURATION = 460;
+
       (async function sequence() {
         var pos = positions();
         await wait(200);
         revealBadge(headings[0]);
+        await wait(POP_DURATION);
         for (var i = 1; i < headings.length; i++) {
           var dist = pos[i] - pos[i - 1];
           var duration = Math.max(300, Math.min(900, dist * 1.1));
           await growTo(pos[i], duration);
           revealBadge(headings[i]);
+          await wait(POP_DURATION);
         }
         await growTo(rail.offsetHeight, 250);
       })();
