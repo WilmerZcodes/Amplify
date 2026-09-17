@@ -121,7 +121,7 @@
     .nav-link::after,
     .cta-button,
     .step-heading::after,
-    .headline-lead,
+    .lead-underline-bar,
     .highlight {
       transition: none;
     }
@@ -138,6 +138,7 @@
   }
 
   .headline {
+    position: relative;
     margin: 0;
     max-width: 16ch;
     font-family: "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
@@ -156,16 +157,23 @@
     }
   }
 
-  .headline-lead {
-    text-decoration-line: underline;
-    text-decoration-color: transparent;
-    text-decoration-thickness: 4px;
-    text-underline-offset: 0.12em;
-    transition: text-decoration-color 0.5s ease;
+  .lead-underline-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
   }
 
-  .headline-lead:hover {
-    text-decoration-color: var(--amplify-black);
+  .lead-underline-bar {
+    position: absolute;
+    height: 4px;
+    background-color: var(--amplify-black);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.35s ease;
+  }
+
+  .lead-underline-bar.is-filled {
+    transform: scaleX(1);
   }
 
   .highlight {
@@ -186,9 +194,8 @@
     transform: scale(1.08);
   }
 
-  .headline:has(.headline-lead:hover) .highlight {
+  .headline.lead-underline-done .highlight {
     transform: scale(1.08);
-    transition-delay: 0.5s;
   }
 
   @keyframes highlight-in {
@@ -491,6 +498,88 @@
         }
         await growTo(rail.offsetHeight, 250);
       })();
+    })();
+
+    (function () {
+      var headline = document.querySelector('.headline');
+      var lead = headline ? headline.querySelector('.headline-lead') : null;
+      if (!headline || !lead) return;
+
+      var layer = document.createElement('span');
+      layer.className = 'lead-underline-layer';
+      headline.appendChild(layer);
+
+      var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var sequenceToken = 0;
+      var bars = [];
+
+      function wait(ms) {
+        return new Promise(function (resolve) { setTimeout(resolve, ms); });
+      }
+
+      function buildBars() {
+        layer.innerHTML = '';
+        bars = [];
+        var range = document.createRange();
+        range.selectNodeContents(lead);
+        var rects = range.getClientRects();
+        var headlineRect = headline.getBoundingClientRect();
+        Array.prototype.forEach.call(rects, function (rect) {
+          var bar = document.createElement('span');
+          bar.className = 'lead-underline-bar';
+          bar.style.left = (rect.left - headlineRect.left) + 'px';
+          bar.style.top = (rect.bottom - headlineRect.top - 4) + 'px';
+          bar.style.width = rect.width + 'px';
+          layer.appendChild(bar);
+          bars.push(bar);
+        });
+      }
+
+      function nextFrame() {
+        return new Promise(function (resolve) {
+          requestAnimationFrame(function () { requestAnimationFrame(resolve); });
+        });
+      }
+
+      async function playSequence() {
+        buildBars();
+        var token = ++sequenceToken;
+
+        if (reduceMotion) {
+          bars.forEach(function (bar) { bar.classList.add('is-filled'); });
+          headline.classList.add('lead-underline-done');
+          return;
+        }
+
+        await nextFrame();
+        if (token !== sequenceToken) return;
+
+        for (var i = 0; i < bars.length; i++) {
+          if (token !== sequenceToken) return;
+          bars[i].classList.add('is-filled');
+          await wait(350);
+        }
+        if (token === sequenceToken) {
+          headline.classList.add('lead-underline-done');
+        }
+      }
+
+      function reset() {
+        sequenceToken++;
+        headline.classList.remove('lead-underline-done');
+        bars.forEach(function (bar) { bar.classList.remove('is-filled'); });
+      }
+
+      lead.addEventListener('mouseenter', playSequence);
+      lead.addEventListener('mouseleave', reset);
+
+      var resizeTimer;
+      window.addEventListener('resize', function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function () {
+          if (bars.length) reset();
+        }, 150);
+      });
     })();
   </script>
 </body>
