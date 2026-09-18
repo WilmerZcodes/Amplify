@@ -211,10 +211,6 @@
     transform: scale(1.08);
   }
 
-  .headline.lead-underline-done .highlight {
-    transform: scale(1.08);
-  }
-
   @keyframes highlight-in {
     0% {
       opacity: 0;
@@ -601,7 +597,7 @@
           observer.unobserve(entry.target);
           enqueue(idx);
         });
-      }, { threshold: 0.3, rootMargin: '0px 0px -10% 0px' });
+      }, { threshold: 0, rootMargin: '0px 0px 20% 0px' });
 
       headings.forEach(function (h) { observer.observe(h); });
     })();
@@ -652,7 +648,6 @@
 
         if (reduceMotion) {
           bars.forEach(function (bar) { bar.classList.add('is-filled'); });
-          headline.classList.add('lead-underline-done');
           return;
         }
 
@@ -662,7 +657,6 @@
           bars[i].classList.add('is-filled');
           await wait(200);
         }
-        headline.classList.add('lead-underline-done');
       }
 
       var observer = new IntersectionObserver(function (entries) {
@@ -672,7 +666,7 @@
           observer.disconnect();
           playSequence();
         });
-      }, { threshold: 0.3 });
+      }, { threshold: 0, rootMargin: '0px 0px 20% 0px' });
       observer.observe(lead);
 
       var resizeTimer;
