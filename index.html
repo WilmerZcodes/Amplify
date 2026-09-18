@@ -537,6 +537,10 @@
         return headings.map(function (h) { return h.offsetTop; });
       }
 
+      function currentHeight() {
+        return fill.getBoundingClientRect().height;
+      }
+
       function growTo(px, duration) {
         return new Promise(function (resolve) {
           fill.style.transitionDuration = duration + 'ms';
@@ -557,22 +561,49 @@
       }
 
       var POP_DURATION = 460;
+      var pos = positions();
+      var queue = [];
+      var done = [];
+      var running = false;
 
-      (async function sequence() {
-        var pos = positions();
-        await wait(200);
-        revealBadge(headings[0]);
-        await wait(POP_DURATION);
-        for (var i = 1; i < headings.length; i++) {
-          var dist = pos[i] - pos[i - 1];
+      async function runQueue() {
+        if (running) return;
+        running = true;
+        while (queue.length) {
+          var i = queue.shift();
+          if (done[i]) continue;
+          done[i] = true;
+          var from = currentHeight();
+          var dist = Math.abs(pos[i] - from);
           var duration = Math.max(300, Math.min(900, dist * 1.1));
           await growTo(pos[i], duration);
           if (i === 2) revealServiceList();
           revealBadge(headings[i]);
           await wait(POP_DURATION);
+          if (i === headings.length - 1) {
+            await growTo(rail.offsetHeight, 250);
+          }
         }
-        await growTo(rail.offsetHeight, 250);
-      })();
+        running = false;
+      }
+
+      function enqueue(i) {
+        if (done[i] || queue.indexOf(i) !== -1) return;
+        queue.push(i);
+        queue.sort(function (a, b) { return a - b; });
+        runQueue();
+      }
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          var idx = headings.indexOf(entry.target);
+          observer.unobserve(entry.target);
+          enqueue(idx);
+        });
+      }, { threshold: 0.3, rootMargin: '0px 0px -10% 0px' });
+
+      headings.forEach(function (h) { observer.observe(h); });
     })();
 
     (function () {
