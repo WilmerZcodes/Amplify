@@ -25,25 +25,28 @@
   }
 
   body {
-    background-color: var(--amplify-page-bg);
+    background:
+      radial-gradient(120% 55% at 50% 0%, rgba(251, 38, 35, 0.16), transparent 75%),
+      var(--amplify-page-bg);
     font-family: Helvetica, Arial, sans-serif;
   }
 
   header,
   footer {
     background:
-      radial-gradient(ellipse 150% 180% at 12% -30%, rgba(0, 0, 0, 0.32), transparent 60%),
-      radial-gradient(ellipse 140% 160% at 108% 130%, rgba(0, 0, 0, 0.62), transparent 68%),
+      radial-gradient(170% 150% at 50% -70%, rgba(255, 145, 135, 0.24), transparent 65%),
+      radial-gradient(190% 210% at 100% 160%, rgba(0, 0, 0, 0.4), transparent 72%),
+      radial-gradient(190% 210% at 0% 160%, rgba(0, 0, 0, 0.28), transparent 72%),
       var(--amplify-red);
     padding-block: clamp(0.6rem, 2vh, 1.1rem);
   }
 
   header {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.45);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.22);
   }
 
   footer {
-    border-top: 1px solid rgba(255, 255, 255, 0.45);
+    border-top: 1px solid rgba(255, 255, 255, 0.22);
   }
 
   .header-inner {
