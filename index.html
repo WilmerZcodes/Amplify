@@ -616,8 +616,8 @@
       headline.appendChild(layer);
 
       var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var sequenceToken = 0;
       var bars = [];
+      var played = false;
 
       function wait(ms) {
         return new Promise(function (resolve) { setTimeout(resolve, ms); });
@@ -649,7 +649,6 @@
 
       async function playSequence() {
         buildBars();
-        var token = ++sequenceToken;
 
         if (reduceMotion) {
           bars.forEach(function (bar) { bar.classList.add('is-filled'); });
@@ -658,32 +657,31 @@
         }
 
         await nextFrame();
-        if (token !== sequenceToken) return;
 
         for (var i = 0; i < bars.length; i++) {
-          if (token !== sequenceToken) return;
           bars[i].classList.add('is-filled');
           await wait(200);
         }
-        if (token === sequenceToken) {
-          headline.classList.add('lead-underline-done');
-        }
+        headline.classList.add('lead-underline-done');
       }
 
-      function reset() {
-        sequenceToken++;
-        headline.classList.remove('lead-underline-done');
-        bars.forEach(function (bar) { bar.classList.remove('is-filled'); });
-      }
-
-      lead.addEventListener('mouseenter', playSequence);
-      lead.addEventListener('mouseleave', reset);
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting || played) return;
+          played = true;
+          observer.disconnect();
+          playSequence();
+        });
+      }, { threshold: 0.3 });
+      observer.observe(lead);
 
       var resizeTimer;
       window.addEventListener('resize', function () {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(function () {
-          if (bars.length) reset();
+          if (!played) return;
+          buildBars();
+          bars.forEach(function (bar) { bar.classList.add('is-filled'); });
         }, 150);
       });
     })();
