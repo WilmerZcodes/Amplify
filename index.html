@@ -30,7 +30,10 @@
 
   header,
   footer {
-    background-color: var(--amplify-red);
+    background:
+      radial-gradient(ellipse 140% 160% at 12% -30%, rgba(255, 255, 255, 0.14), transparent 55%),
+      radial-gradient(ellipse 120% 140% at 105% 130%, rgba(0, 0, 0, 0.22), transparent 60%),
+      var(--amplify-red);
     padding-block: clamp(0.6rem, 2vh, 1.1rem);
   }
 
@@ -210,35 +213,6 @@
       opacity: 1;
       transform: translateY(0) scale(1);
     }
-  }
-
-  .doodle-layer {
-    position: fixed;
-    inset: 0;
-    overflow: visible;
-    pointer-events: none;
-    z-index: 60;
-  }
-
-  .doodle-caption {
-    position: absolute;
-    left: 0;
-    top: 0;
-    transform: translate(-50%, calc(-100% + 8px));
-    opacity: 0;
-    font-family: "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    font-style: italic;
-    font-weight: 600;
-    font-size: 1rem;
-    letter-spacing: 0.01em;
-    color: var(--amplify-black);
-    white-space: nowrap;
-    transition: opacity 0.35s ease, transform 0.35s ease;
-  }
-
-  .doodle-caption.is-visible {
-    opacity: 1;
-    transform: translate(-50%, -100%);
   }
 
   .section-title {
@@ -475,10 +449,6 @@
   </main>
   <footer></footer>
 
-  <div class="doodle-layer" aria-hidden="true">
-    <div class="doodle-caption">Så här går det till</div>
-  </div>
-
   <script>
     (function () {
       var rail = document.querySelector('.steps-rail');
@@ -616,54 +586,6 @@
       });
     })();
 
-    (function () {
-      var highlight = document.querySelector('.highlight');
-      var badge1 = document.querySelector('.steps-rail .step-heading');
-      var caption = document.querySelector('.doodle-caption');
-      if (!highlight || !badge1 || !caption) return;
-
-      function positionCaption() {
-        var rect = badge1.getBoundingClientRect();
-        var cs = getComputedStyle(badge1, '::before');
-        var w = parseFloat(cs.width) || 30;
-        var left = parseFloat(cs.left) || -50;
-        var centerX = rect.left + left + w / 2;
-        caption.style.left = centerX + 'px';
-        caption.style.top = (rect.top - 10) + 'px';
-      }
-
-      function clampCaption() {
-        var capRect = caption.getBoundingClientRect();
-        var margin = 8;
-        var shift = 0;
-        if (capRect.left < margin) shift = margin - capRect.left;
-        else if (capRect.right > window.innerWidth - margin) shift = (window.innerWidth - margin) - capRect.right;
-        if (shift !== 0) {
-          var current = parseFloat(caption.style.left) || 0;
-          caption.style.left = (current + shift) + 'px';
-        }
-      }
-
-      function play() {
-        positionCaption();
-        caption.classList.add('is-visible');
-        clampCaption();
-      }
-
-      function stop() {
-        caption.classList.remove('is-visible');
-      }
-
-      highlight.addEventListener('mouseenter', play);
-      highlight.addEventListener('mouseleave', stop);
-
-      window.addEventListener('resize', function () {
-        if (caption.classList.contains('is-visible')) {
-          positionCaption();
-          clampCaption();
-        }
-      });
-    })();
   </script>
 </body>
 </html>
