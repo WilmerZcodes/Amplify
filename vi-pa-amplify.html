@@ -26,7 +26,9 @@
 
   body {
     background:
-      radial-gradient(120% 55% at 50% 0%, rgba(251, 38, 35, 0.16), transparent 75%),
+      radial-gradient(85% 45% at 18% 0%, rgba(251, 38, 35, 0.17), transparent 72%),
+      radial-gradient(70% 40% at 88% 6%, rgba(255, 120, 90, 0.1), transparent 75%),
+      radial-gradient(65% 38% at 55% 92%, rgba(140, 15, 20, 0.22), transparent 70%),
       var(--amplify-page-bg);
     font-family: Helvetica, Arial, sans-serif;
   }
@@ -42,11 +44,11 @@
   }
 
   header {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
   }
 
   footer {
-    border-top: 1px solid rgba(255, 255, 255, 0.22);
+    border-top: 1px solid rgba(255, 255, 255, 0.4);
   }
 
   .header-inner {
@@ -121,6 +123,17 @@
 
   .nav-link:hover::after {
     width: 100%;
+  }
+
+  .nav-link.is-active {
+    background-color: #0d0d0d;
+    color: #ffffff;
+    padding: 0.45em 1.1em;
+    border-radius: 999px;
+  }
+
+  .nav-link.is-active::after {
+    display: none;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -247,7 +260,8 @@
     <div class="header-inner">
       <a class="logo-link" href="index.html"><img class="logo" src="bild__1_-removebg-preview.png" alt="Amplify" /></a>
       <nav class="nav-group">
-        <a class="nav-link" href="index.html">Tillbaka till startsidan</a>
+        <a class="nav-link" href="index.html">Hem</a>
+        <a class="nav-link is-active" href="vi-pa-amplify.html">Vi på Amplify</a>
         <a class="nav-link" href="kop-vara-tjanster.html">Köp våra tjänster</a>
       </nav>
     </div>
