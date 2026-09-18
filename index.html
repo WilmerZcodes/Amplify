@@ -276,6 +276,53 @@
     width: 0.65rem;
     height: 2px;
     background-color: var(--amplify-red);
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+    box-shadow: 0 0 0 0 rgba(251, 38, 35, 0);
+  }
+
+  .service-list li.is-visible::before {
+    animation: dash-pop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  @keyframes dash-pop {
+    0% {
+      opacity: 0;
+      transform: scale(0) rotate(0deg);
+      box-shadow: 0 0 0 0 rgba(251, 38, 35, 0.65);
+    }
+    45% {
+      opacity: 1;
+      transform: scale(1.7) rotate(430deg);
+      box-shadow: 0 0 10px 6px rgba(251, 38, 35, 0.45);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) rotate(720deg);
+      box-shadow: 0 0 0 0 rgba(251, 38, 35, 0);
+    }
+  }
+
+  .service-text {
+    display: inline-block;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.5s ease 0.2s;
+  }
+
+  .service-list li.is-visible .service-text {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .service-list li.is-visible::before {
+      animation: none;
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+
+    .service-text {
+      transition: none;
+    }
   }
 
   .cta-button {
@@ -443,14 +490,14 @@
       <p class="body-text">Gör en makeover på ditt varumärke och exponerar dig till en större marknad.</p>
       <h2 class="section-title step-heading">Våra tjänster</h2>
       <ul class="service-list">
-        <li>Skapande av eller förbättrande av befintlig hemsida</li>
-        <li>Branding: skapande/förbättring av logotyper, produkter, skyltning mm</li>
-        <li>Grafisk design (flygblad, posters, visitkort mm)</li>
-        <li>Musikproduktion och ljuddesign</li>
-        <li>Videoredigering</li>
-        <li>Fullständigt skapande av reklamfilmer</li>
-        <li>Skapar professionella konton på sociala medier</li>
-        <li>Skapar custom epostadresser</li>
+        <li><span class="service-text">Skapande av eller förbättrande av befintlig hemsida</span></li>
+        <li><span class="service-text">Branding: skapande/förbättring av logotyper, produkter, skyltning mm</span></li>
+        <li><span class="service-text">Grafisk design (flygblad, posters, visitkort mm)</span></li>
+        <li><span class="service-text">Musikproduktion och ljuddesign</span></li>
+        <li><span class="service-text">Videoredigering</span></li>
+        <li><span class="service-text">Fullständigt skapande av reklamfilmer</span></li>
+        <li><span class="service-text">Skapar professionella konton på sociala medier</span></li>
+        <li><span class="service-text">Skapar custom epostadresser</span></li>
       </ul>
       <h2 class="section-title step-heading">Ett företag innan och efter amplify</h2>
 
@@ -468,9 +515,20 @@
       var headings = rail ? Array.prototype.slice.call(rail.querySelectorAll('.step-heading')) : [];
       if (!rail || !fill || !headings.length) return;
 
+      var serviceItems = Array.prototype.slice.call(document.querySelectorAll('.service-list li'));
+
+      function revealServiceList() {
+        serviceItems.forEach(function (li, i) {
+          setTimeout(function () {
+            li.classList.add('is-visible');
+          }, i * 90);
+        });
+      }
+
       var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (reduceMotion) {
         headings.forEach(function (h) { h.classList.add('is-visible', 'pop-done'); });
+        serviceItems.forEach(function (li) { li.classList.add('is-visible'); });
         fill.style.height = '100%';
         return;
       }
@@ -509,6 +567,7 @@
           var dist = pos[i] - pos[i - 1];
           var duration = Math.max(300, Math.min(900, dist * 1.1));
           await growTo(pos[i], duration);
+          if (i === 2) revealServiceList();
           revealBadge(headings[i]);
           await wait(POP_DURATION);
         }
