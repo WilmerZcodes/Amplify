@@ -205,8 +205,8 @@
   .cta-button {
     display: inline-block;
     margin: clamp(2.5rem, 7vh, 4rem) 0 0;
-    background-color: var(--amplify-black);
-    color: var(--amplify-white);
+    background-color: var(--amplify-red);
+    color: var(--amplify-black);
     font-family: "Poppins", Arial, sans-serif;
     font-weight: 800;
     font-size: clamp(0.9rem, 1.8vw, 1.1rem);
@@ -324,8 +324,8 @@
     padding: 0.75em 1.2em;
     border: none;
     border-radius: 0.3em;
-    background-color: var(--amplify-black);
-    color: var(--amplify-white);
+    background-color: var(--amplify-red);
+    color: var(--amplify-black);
     font-family: "Poppins", Arial, sans-serif;
     font-weight: 800;
     font-size: 0.9rem;
@@ -337,11 +337,6 @@
   .package-add:hover {
     transform: translateY(-3px);
     box-shadow: 0 10px 20px -8px rgba(13, 13, 13, 0.45);
-  }
-
-  .package-card--full .package-add {
-    background-color: var(--amplify-red);
-    color: var(--amplify-white);
   }
 
   .package-add.is-added {
@@ -358,15 +353,21 @@
     align-items: center;
     gap: 0.5em;
     padding: 0.85em 1.6em;
-    border: 1px solid var(--amplify-black);
+    border: none;
     border-radius: 0.3em;
-    background: none;
+    background-color: var(--amplify-red);
     color: var(--amplify-black);
     font-family: "Poppins", Arial, sans-serif;
     font-weight: 800;
     font-size: clamp(0.9rem, 1.8vw, 1.1rem);
     letter-spacing: 0.02em;
     cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .individual-toggle:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px -8px rgba(13, 13, 13, 0.45);
   }
 
   .individual-toggle::after {
@@ -471,15 +472,17 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 2.2rem;
-    height: 2.2rem;
+    width: 2.9rem;
+    height: 2.9rem;
     border-radius: 50%;
-    background-color: rgba(13, 13, 13, 0.12);
+    background-color: rgba(255, 255, 255, 0.92);
   }
 
   .cart-icon {
     display: block;
-    color: #0d0d0d;
+    width: 2.25rem;
+    height: 2.25rem;
+    object-fit: contain;
   }
 
   .cart-count {
@@ -591,6 +594,7 @@
     .cta-button,
     .package-add,
     .individual-confirm,
+    .individual-toggle,
     .individual-toggle::after {
       transition: none;
     }
@@ -607,9 +611,7 @@
         <div class="cart-wrap">
           <button class="cart-button" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="cart-panel">
             <span class="cart-icon-wrap">
-              <svg class="cart-icon" viewBox="0 0 40 24" width="26" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M1 12 Q6 2 11 12 T21 12 T31 12 T39 12" />
-              </svg>
+              <img class="cart-icon" src="AMPLIFIER-removebg-preview.png" alt="" aria-hidden="true" />
               <span class="cart-count">0</span>
             </span>
             <span class="cart-label">Varukorg</span>
