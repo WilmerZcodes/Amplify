@@ -76,6 +76,11 @@
       align-items: flex-start;
       gap: 0.75rem;
     }
+
+    .cart-panel {
+      right: auto;
+      left: 0;
+    }
   }
 
   .logo-link {
@@ -251,6 +256,142 @@
     font-weight: 400;
     color: #9c8f8f;
   }
+
+  .cart-wrap {
+    position: relative;
+  }
+
+  .cart-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    background: none;
+    border: none;
+    padding: 0.3em 0.4em;
+    color: #0d0d0d;
+    font-family: "Josefin Sans", Arial, sans-serif;
+    cursor: pointer;
+  }
+
+  .cart-icon-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 50%;
+    background-color: rgba(13, 13, 13, 0.12);
+  }
+
+  .cart-icon {
+    display: block;
+    color: #0d0d0d;
+  }
+
+  .cart-count {
+    position: absolute;
+    top: -0.3em;
+    right: -0.3em;
+    min-width: 1.15em;
+    height: 1.15em;
+    padding: 0 0.25em;
+    border-radius: 999px;
+    background-color: var(--amplify-black);
+    color: var(--amplify-red);
+    font-family: "Poppins", Arial, sans-serif;
+    font-size: 0.65rem;
+    font-weight: 800;
+    line-height: 1.15em;
+    text-align: center;
+  }
+
+  .cart-label {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #0d0d0d;
+  }
+
+  .cart-panel {
+    position: absolute;
+    top: calc(100% + 0.6rem);
+    right: 0;
+    width: min(320px, 90vw);
+    background-color: var(--amplify-page-bg);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 0.6rem;
+    padding: 1rem;
+    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.6);
+    z-index: 80;
+  }
+
+  .cart-empty {
+    margin: 0;
+    font-family: "Jost", Arial, sans-serif;
+    font-size: 0.9rem;
+    color: var(--amplify-black);
+    opacity: 0.7;
+  }
+
+  .cart-items {
+    list-style: none;
+    margin: 0 0 0.75rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    max-height: 260px;
+    overflow-y: auto;
+  }
+
+  .cart-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: "Jost", Arial, sans-serif;
+    font-size: 0.85rem;
+    color: var(--amplify-black);
+  }
+
+  .cart-item-name {
+    flex: 1;
+  }
+
+  .cart-item-price {
+    flex: 0 0 auto;
+    font-weight: 700;
+    color: var(--amplify-red);
+    white-space: nowrap;
+  }
+
+  .cart-item-remove {
+    flex: 0 0 auto;
+    background: none;
+    border: none;
+    color: var(--amplify-black);
+    opacity: 0.6;
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0.1em 0.3em;
+  }
+
+  .cart-item-remove:hover {
+    opacity: 1;
+  }
+
+  .cart-total {
+    margin: 0;
+    padding-top: 0.6rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    font-family: "Poppins", Arial, sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--amplify-black);
+  }
 </style>
 </head>
 <body>
@@ -260,6 +401,22 @@
       <nav class="nav-group">
         <a class="nav-link is-active" href="vi-pa-amplify.html">Vi på Amplify</a>
         <a class="nav-link" href="kop-vara-tjanster.html">Köp våra tjänster</a>
+        <div class="cart-wrap">
+          <button class="cart-button" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="cart-panel">
+            <span class="cart-icon-wrap">
+              <svg class="cart-icon" viewBox="0 0 40 24" width="26" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M1 12 Q6 2 11 12 T21 12 T31 12 T39 12" />
+              </svg>
+              <span class="cart-count">0</span>
+            </span>
+            <span class="cart-label">Varukorg</span>
+          </button>
+          <div class="cart-panel" id="cart-panel" hidden>
+            <p class="cart-empty">Din varukorg är tom.</p>
+            <ul class="cart-items"></ul>
+            <p class="cart-total"></p>
+          </div>
+        </div>
       </nav>
     </div>
   </header>
@@ -339,5 +496,102 @@
     </div>
   </main>
   <footer></footer>
+
+  <script>
+    (function () {
+      var CART_KEY = 'amplifyCart';
+
+      function loadCart() {
+        try {
+          var raw = localStorage.getItem(CART_KEY);
+          return raw ? JSON.parse(raw) : [];
+        } catch (e) {
+          return [];
+        }
+      }
+
+      function saveCart(items) {
+        try {
+          localStorage.setItem(CART_KEY, JSON.stringify(items));
+        } catch (e) {}
+      }
+
+      var cart = loadCart();
+
+      var cartWrap = document.querySelector('.cart-wrap');
+      var cartButton = document.querySelector('.cart-button');
+      var cartCount = document.querySelector('.cart-count');
+      var cartPanel = document.querySelector('.cart-panel');
+      var cartItemsEl = document.querySelector('.cart-items');
+      var cartEmptyEl = document.querySelector('.cart-empty');
+      var cartTotalEl = document.querySelector('.cart-total');
+
+      function formatPrice(n) {
+        return n.toLocaleString('sv-SE') + ' kr';
+      }
+
+      function renderCart() {
+        if (cartCount) cartCount.textContent = cart.length;
+        if (!cartItemsEl) return;
+        cartItemsEl.innerHTML = '';
+        if (cart.length === 0) {
+          if (cartEmptyEl) cartEmptyEl.hidden = false;
+        } else {
+          if (cartEmptyEl) cartEmptyEl.hidden = true;
+          cart.forEach(function (item, i) {
+            var li = document.createElement('li');
+            li.className = 'cart-item';
+            var nameSpan = document.createElement('span');
+            nameSpan.className = 'cart-item-name';
+            nameSpan.textContent = item.name;
+            var priceSpan = document.createElement('span');
+            priceSpan.className = 'cart-item-price';
+            priceSpan.textContent = item.price ? formatPrice(item.price) : 'Offert';
+            var removeBtn = document.createElement('button');
+            removeBtn.type = 'button';
+            removeBtn.className = 'cart-item-remove';
+            removeBtn.setAttribute('aria-label', 'Ta bort ' + item.name);
+            removeBtn.textContent = '×';
+            removeBtn.addEventListener('click', function () {
+              cart.splice(i, 1);
+              saveCart(cart);
+              renderCart();
+            });
+            li.appendChild(nameSpan);
+            li.appendChild(priceSpan);
+            li.appendChild(removeBtn);
+            cartItemsEl.appendChild(li);
+          });
+        }
+        var total = cart.reduce(function (sum, item) { return sum + (item.price || 0); }, 0);
+        if (cartTotalEl) cartTotalEl.textContent = total > 0 ? 'Totalt: ' + formatPrice(total) : '';
+      }
+
+      window.amplifyCart = {
+        add: function (name, price) {
+          cart.push({ name: name, price: price || 0 });
+          saveCart(cart);
+          renderCart();
+        }
+      };
+
+      if (cartButton && cartPanel) {
+        cartButton.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var isHidden = cartPanel.hidden;
+          cartPanel.hidden = !isHidden;
+          cartButton.setAttribute('aria-expanded', String(isHidden));
+        });
+        document.addEventListener('click', function (e) {
+          if (!cartPanel.hidden && cartWrap && !cartWrap.contains(e.target)) {
+            cartPanel.hidden = true;
+            cartButton.setAttribute('aria-expanded', 'false');
+          }
+        });
+      }
+
+      renderCart();
+    })();
+  </script>
 </body>
 </html>

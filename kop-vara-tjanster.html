@@ -74,6 +74,11 @@
       align-items: flex-start;
       gap: 0.75rem;
     }
+
+    .cart-panel {
+      right: auto;
+      left: 0;
+    }
   }
 
   .logo-link {
@@ -217,10 +222,376 @@
     box-shadow: 0 10px 20px -8px rgba(13, 13, 13, 0.45);
   }
 
+  .packages {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1rem, 3vw, 1.75rem);
+    margin: 0 0 clamp(2rem, 5vh, 3rem);
+    align-items: end;
+  }
+
+  @media (max-width: 800px) {
+    .packages {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .package-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    padding: 1.6rem 1.4rem;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 0.9rem;
+    background-color: rgba(255, 255, 255, 0.03);
+  }
+
+  .package-card--full {
+    border-color: var(--amplify-red);
+    background-color: rgba(251, 38, 35, 0.07);
+    transform: scale(1.04);
+  }
+
+  @media (max-width: 800px) {
+    .package-card--full {
+      transform: none;
+      order: -1;
+    }
+  }
+
+  .package-save {
+    margin: 0;
+    align-self: flex-start;
+    padding: 0.25em 0.7em;
+    border-radius: 999px;
+    background-color: var(--amplify-red);
+    color: var(--amplify-white);
+    font-family: "Poppins", Arial, sans-serif;
+    font-weight: 800;
+    font-size: 0.75rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  .package-name {
+    margin: 0;
+    font-family: "Poppins", Arial, sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.05rem, 2vw, 1.35rem);
+    color: var(--amplify-black);
+  }
+
+  .package-price {
+    margin: 0;
+    font-family: "Poppins", Arial, sans-serif;
+    font-weight: 900;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--amplify-red);
+  }
+
+  .package-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+  }
+
+  .package-list li {
+    position: relative;
+    padding-left: 1.3em;
+    font-family: "Jost", Arial, sans-serif;
+    font-weight: 300;
+    font-size: 0.92rem;
+    line-height: 1.4;
+    color: var(--amplify-black);
+  }
+
+  .package-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 0.65rem;
+    height: 2px;
+    background-color: var(--amplify-red);
+  }
+
+  .package-add {
+    margin-top: 0.4rem;
+    padding: 0.75em 1.2em;
+    border: none;
+    border-radius: 0.3em;
+    background-color: var(--amplify-black);
+    color: var(--amplify-white);
+    font-family: "Poppins", Arial, sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .package-add:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px -8px rgba(13, 13, 13, 0.45);
+  }
+
+  .package-card--full .package-add {
+    background-color: var(--amplify-red);
+    color: var(--amplify-white);
+  }
+
+  .package-add.is-added {
+    background-color: #1c7a3e;
+  }
+
+  .individual-purchase {
+    position: relative;
+    margin: 0 0 clamp(2rem, 6vh, 3rem);
+  }
+
+  .individual-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.85em 1.6em;
+    border: 1px solid var(--amplify-black);
+    border-radius: 0.3em;
+    background: none;
+    color: var(--amplify-black);
+    font-family: "Poppins", Arial, sans-serif;
+    font-weight: 800;
+    font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+    letter-spacing: 0.02em;
+    cursor: pointer;
+  }
+
+  .individual-toggle::after {
+    content: "";
+    width: 0.5em;
+    height: 0.5em;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform 0.2s ease;
+  }
+
+  .individual-toggle[aria-expanded="true"]::after {
+    transform: rotate(-135deg);
+  }
+
+  .individual-panel {
+    margin-top: 0.9rem;
+    padding: 1.2rem;
+    max-width: 640px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 0.6rem;
+    background-color: rgba(255, 255, 255, 0.03);
+  }
+
+  .individual-list {
+    margin: 0 0 1rem;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .individual-list li {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.65rem;
+  }
+
+  .individual-list li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .individual-list label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-family: "Jost", Arial, sans-serif;
+    font-weight: 300;
+    font-size: 0.95rem;
+    color: var(--amplify-black);
+    cursor: pointer;
+  }
+
+  .individual-list input[type="checkbox"] {
+    margin-top: 0.2em;
+    flex: 0 0 auto;
+    width: 1.05em;
+    height: 1.05em;
+    accent-color: var(--amplify-red);
+    cursor: pointer;
+  }
+
+  .individual-confirm {
+    padding: 0.7em 1.4em;
+    border: none;
+    border-radius: 0.3em;
+    background-color: var(--amplify-red);
+    color: var(--amplify-white);
+    font-family: "Poppins", Arial, sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  .individual-confirm:hover {
+    transform: translateY(-3px);
+  }
+
+  .cart-wrap {
+    position: relative;
+  }
+
+  .cart-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    background: none;
+    border: none;
+    padding: 0.3em 0.4em;
+    color: #0d0d0d;
+    font-family: "Josefin Sans", Arial, sans-serif;
+    cursor: pointer;
+  }
+
+  .cart-icon-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 50%;
+    background-color: rgba(13, 13, 13, 0.12);
+  }
+
+  .cart-icon {
+    display: block;
+    color: #0d0d0d;
+  }
+
+  .cart-count {
+    position: absolute;
+    top: -0.3em;
+    right: -0.3em;
+    min-width: 1.15em;
+    height: 1.15em;
+    padding: 0 0.25em;
+    border-radius: 999px;
+    background-color: var(--amplify-black);
+    color: var(--amplify-red);
+    font-family: "Poppins", Arial, sans-serif;
+    font-size: 0.65rem;
+    font-weight: 800;
+    line-height: 1.15em;
+    text-align: center;
+  }
+
+  .cart-label {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #0d0d0d;
+  }
+
+  .cart-panel {
+    position: absolute;
+    top: calc(100% + 0.6rem);
+    right: 0;
+    width: min(320px, 90vw);
+    background-color: var(--amplify-page-bg);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 0.6rem;
+    padding: 1rem;
+    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.6);
+    z-index: 80;
+  }
+
+  .cart-empty {
+    margin: 0;
+    font-family: "Jost", Arial, sans-serif;
+    font-size: 0.9rem;
+    color: var(--amplify-black);
+    opacity: 0.7;
+  }
+
+  .cart-items {
+    list-style: none;
+    margin: 0 0 0.75rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    max-height: 260px;
+    overflow-y: auto;
+  }
+
+  .cart-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: "Jost", Arial, sans-serif;
+    font-size: 0.85rem;
+    color: var(--amplify-black);
+  }
+
+  .cart-item-name {
+    flex: 1;
+  }
+
+  .cart-item-price {
+    flex: 0 0 auto;
+    font-weight: 700;
+    color: var(--amplify-red);
+    white-space: nowrap;
+  }
+
+  .cart-item-remove {
+    flex: 0 0 auto;
+    background: none;
+    border: none;
+    color: var(--amplify-black);
+    opacity: 0.6;
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0.1em 0.3em;
+  }
+
+  .cart-item-remove:hover {
+    opacity: 1;
+  }
+
+  .cart-total {
+    margin: 0;
+    padding-top: 0.6rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    font-family: "Poppins", Arial, sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--amplify-black);
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .logo-link,
     .nav-link::after,
-    .cta-button {
+    .cta-button,
+    .package-add,
+    .individual-confirm,
+    .individual-toggle::after {
       transition: none;
     }
   }
@@ -233,6 +604,22 @@
       <nav class="nav-group">
         <a class="nav-link" href="vi-pa-amplify.html">Vi på Amplify</a>
         <a class="nav-link is-active" href="kop-vara-tjanster.html">Köp våra tjänster</a>
+        <div class="cart-wrap">
+          <button class="cart-button" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="cart-panel">
+            <span class="cart-icon-wrap">
+              <svg class="cart-icon" viewBox="0 0 40 24" width="26" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M1 12 Q6 2 11 12 T21 12 T31 12 T39 12" />
+              </svg>
+              <span class="cart-count">0</span>
+            </span>
+            <span class="cart-label">Varukorg</span>
+          </button>
+          <div class="cart-panel" id="cart-panel" hidden>
+            <p class="cart-empty">Din varukorg är tom.</p>
+            <ul class="cart-items"></ul>
+            <p class="cart-total"></p>
+          </div>
+        </div>
       </nav>
     </div>
   </header>
@@ -240,19 +627,218 @@
     <h1 class="page-title">Köp våra tjänster</h1>
     <p class="body-text">Välj vad ditt företag behöver — hör av dig så sätter vi ihop ett upplägg som passar er.</p>
 
-    <ul class="service-list">
-      <li><span>Skapande av eller förbättrande av befintlig hemsida</span><span class="price-tag">Offert</span></li>
-      <li><span>Branding: skapande/förbättring av logotyper, produkter, skyltning mm</span><span class="price-tag">Offert</span></li>
-      <li><span>Grafisk design (flygblad, posters, visitkort mm)</span><span class="price-tag">Offert</span></li>
-      <li><span>Musikproduktion och ljuddesign</span><span class="price-tag">Offert</span></li>
-      <li><span>Videoredigering</span><span class="price-tag">Offert</span></li>
-      <li><span>Fullständigt skapande av reklamfilmer</span><span class="price-tag">Offert</span></li>
-      <li><span>Skapar professionella konton på sociala medier</span><span class="price-tag">Offert</span></li>
-      <li><span>Skapar custom epostadresser</span><span class="price-tag">Offert</span></li>
-    </ul>
+    <div class="packages">
+      <article class="package-card" data-price="2499">
+        <h2 class="package-name">Startup paketet</h2>
+        <p class="package-price">2499 kr</p>
+        <ul class="package-list">
+          <li>Hemsida</li>
+          <li>Branding</li>
+          <li>Custom epostadresser</li>
+          <li>Konton på sociala medier</li>
+        </ul>
+        <button class="package-add" type="button">Lägg till i kundvagn</button>
+      </article>
+
+      <article class="package-card package-card--full" data-price="3498">
+        <p class="package-save">Spara: 1499 kr</p>
+        <h2 class="package-name">Fullständiga paketet</h2>
+        <p class="package-price">3498 kr</p>
+        <ul class="package-list">
+          <li>Hemsida</li>
+          <li>Branding</li>
+          <li>Custom epostadresser</li>
+          <li>Konton på sociala medier</li>
+          <li>Grafisk design</li>
+          <li>Musikproduktion och ljuddesign</li>
+          <li>Videoredigering</li>
+          <li>Reklamfilmer</li>
+        </ul>
+        <button class="package-add" type="button">Lägg till i kundvagn</button>
+      </article>
+
+      <article class="package-card" data-price="2499">
+        <h2 class="package-name">Reklampaketet</h2>
+        <p class="package-price">2499 kr</p>
+        <ul class="package-list">
+          <li>Grafisk design</li>
+          <li>Musikproduktion och ljuddesign</li>
+          <li>Videoredigering</li>
+          <li>Reklamfilmer</li>
+        </ul>
+        <button class="package-add" type="button">Lägg till i kundvagn</button>
+      </article>
+    </div>
+
+    <div class="individual-purchase">
+      <button class="individual-toggle" type="button" aria-expanded="false" aria-controls="individual-panel">
+        Köp enskilda tjänster
+      </button>
+      <div class="individual-panel" id="individual-panel" hidden>
+        <ul class="individual-list">
+          <li><label><input type="checkbox" value="Skapande av eller förbättrande av befintlig hemsida" /> Skapande av eller förbättrande av befintlig hemsida</label></li>
+          <li><label><input type="checkbox" value="Branding: skapande/förbättring av logotyper, produkter, skyltning mm" /> Branding: skapande/förbättring av logotyper, produkter, skyltning mm</label></li>
+          <li><label><input type="checkbox" value="Grafisk design (flygblad, posters, visitkort mm)" /> Grafisk design (flygblad, posters, visitkort mm)</label></li>
+          <li><label><input type="checkbox" value="Musikproduktion och ljuddesign" /> Musikproduktion och ljuddesign</label></li>
+          <li><label><input type="checkbox" value="Videoredigering" /> Videoredigering</label></li>
+          <li><label><input type="checkbox" value="Fullständigt skapande av reklamfilmer" /> Fullständigt skapande av reklamfilmer</label></li>
+          <li><label><input type="checkbox" value="Skapar professionella konton på sociala medier" /> Skapar professionella konton på sociala medier</label></li>
+          <li><label><input type="checkbox" value="Skapar custom epostadresser" /> Skapar custom epostadresser</label></li>
+        </ul>
+        <button class="individual-confirm" type="button">Lägg till</button>
+      </div>
+    </div>
 
     <a class="cta-button" href="vi-pa-amplify.html">Kontakta oss</a>
   </main>
   <footer></footer>
+
+  <script>
+    (function () {
+      var CART_KEY = 'amplifyCart';
+
+      function loadCart() {
+        try {
+          var raw = localStorage.getItem(CART_KEY);
+          return raw ? JSON.parse(raw) : [];
+        } catch (e) {
+          return [];
+        }
+      }
+
+      function saveCart(items) {
+        try {
+          localStorage.setItem(CART_KEY, JSON.stringify(items));
+        } catch (e) {}
+      }
+
+      var cart = loadCart();
+
+      var cartWrap = document.querySelector('.cart-wrap');
+      var cartButton = document.querySelector('.cart-button');
+      var cartCount = document.querySelector('.cart-count');
+      var cartPanel = document.querySelector('.cart-panel');
+      var cartItemsEl = document.querySelector('.cart-items');
+      var cartEmptyEl = document.querySelector('.cart-empty');
+      var cartTotalEl = document.querySelector('.cart-total');
+
+      function formatPrice(n) {
+        return n.toLocaleString('sv-SE') + ' kr';
+      }
+
+      function renderCart() {
+        if (cartCount) cartCount.textContent = cart.length;
+        if (!cartItemsEl) return;
+        cartItemsEl.innerHTML = '';
+        if (cart.length === 0) {
+          if (cartEmptyEl) cartEmptyEl.hidden = false;
+        } else {
+          if (cartEmptyEl) cartEmptyEl.hidden = true;
+          cart.forEach(function (item, i) {
+            var li = document.createElement('li');
+            li.className = 'cart-item';
+            var nameSpan = document.createElement('span');
+            nameSpan.className = 'cart-item-name';
+            nameSpan.textContent = item.name;
+            var priceSpan = document.createElement('span');
+            priceSpan.className = 'cart-item-price';
+            priceSpan.textContent = item.price ? formatPrice(item.price) : 'Offert';
+            var removeBtn = document.createElement('button');
+            removeBtn.type = 'button';
+            removeBtn.className = 'cart-item-remove';
+            removeBtn.setAttribute('aria-label', 'Ta bort ' + item.name);
+            removeBtn.textContent = '×';
+            removeBtn.addEventListener('click', function () {
+              cart.splice(i, 1);
+              saveCart(cart);
+              renderCart();
+            });
+            li.appendChild(nameSpan);
+            li.appendChild(priceSpan);
+            li.appendChild(removeBtn);
+            cartItemsEl.appendChild(li);
+          });
+        }
+        var total = cart.reduce(function (sum, item) { return sum + (item.price || 0); }, 0);
+        if (cartTotalEl) cartTotalEl.textContent = total > 0 ? 'Totalt: ' + formatPrice(total) : '';
+      }
+
+      window.amplifyCart = {
+        add: function (name, price) {
+          cart.push({ name: name, price: price || 0 });
+          saveCart(cart);
+          renderCart();
+        }
+      };
+
+      if (cartButton && cartPanel) {
+        cartButton.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var isHidden = cartPanel.hidden;
+          cartPanel.hidden = !isHidden;
+          cartButton.setAttribute('aria-expanded', String(isHidden));
+        });
+        document.addEventListener('click', function (e) {
+          if (!cartPanel.hidden && cartWrap && !cartWrap.contains(e.target)) {
+            cartPanel.hidden = true;
+            cartButton.setAttribute('aria-expanded', 'false');
+          }
+        });
+      }
+
+      renderCart();
+    })();
+  </script>
+
+  <script>
+    (function () {
+      Array.prototype.forEach.call(document.querySelectorAll('.package-add'), function (btn) {
+        btn.addEventListener('click', function () {
+          var card = btn.closest('.package-card');
+          var name = card.querySelector('.package-name').textContent;
+          var price = parseInt(card.getAttribute('data-price'), 10) || 0;
+          if (window.amplifyCart) window.amplifyCart.add(name, price);
+          btn.textContent = 'Tillagd ✓';
+          btn.classList.add('is-added');
+          setTimeout(function () {
+            btn.textContent = 'Lägg till i kundvagn';
+            btn.classList.remove('is-added');
+          }, 1500);
+        });
+      });
+
+      var toggle = document.querySelector('.individual-toggle');
+      var panel = document.querySelector('.individual-panel');
+      if (toggle && panel) {
+        toggle.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var isHidden = panel.hidden;
+          panel.hidden = !isHidden;
+          toggle.setAttribute('aria-expanded', String(isHidden));
+        });
+        document.addEventListener('click', function (e) {
+          if (!panel.hidden && !panel.contains(e.target) && e.target !== toggle) {
+            panel.hidden = true;
+            toggle.setAttribute('aria-expanded', 'false');
+          }
+        });
+      }
+
+      var confirmBtn = document.querySelector('.individual-confirm');
+      if (confirmBtn) {
+        confirmBtn.addEventListener('click', function () {
+          var checked = document.querySelectorAll('.individual-list input[type="checkbox"]:checked');
+          Array.prototype.forEach.call(checked, function (cb) {
+            if (window.amplifyCart) window.amplifyCart.add(cb.value, 0);
+            cb.checked = false;
+          });
+          if (panel) {
+            panel.hidden = true;
+            toggle.setAttribute('aria-expanded', 'false');
+          }
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
