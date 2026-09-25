@@ -461,10 +461,26 @@
     gap: 0.45em;
     background: none;
     border: none;
-    padding: 0.3em 0.4em;
+    padding: 0.3em 0.4em 0.4em;
     color: #0d0d0d;
     font-family: "Josefin Sans", Arial, sans-serif;
     cursor: pointer;
+  }
+
+  .cart-button::after {
+    content: "";
+    position: absolute;
+    left: 0.4em;
+    right: 0.4em;
+    bottom: 0;
+    height: 0.08em;
+    width: 0;
+    background-color: #0d0d0d;
+    transition: width 0.3s ease;
+  }
+
+  .cart-button:hover::after {
+    width: calc(100% - 0.8em);
   }
 
   .cart-icon-wrap {
@@ -472,10 +488,6 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.92);
   }
 
   .cart-icon {
@@ -501,11 +513,12 @@
   }
 
   .cart-label {
-    font-size: 0.62rem;
+    font-family: "Josefin Sans", Arial, sans-serif;
     font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+    font-size: clamp(0.95rem, 2.2vw, 1.25rem);
+    letter-spacing: 0.02em;
     color: #0d0d0d;
+    white-space: nowrap;
   }
 
   .cart-panel {
@@ -590,6 +603,7 @@
     .logo-link,
     .nav-link::after,
     .cta-button,
+    .cart-button::after,
     .package-add,
     .individual-confirm,
     .individual-toggle,
