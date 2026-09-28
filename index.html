@@ -140,15 +140,62 @@
     display: none;
   }
 
+  .letter {
+    display: inline-block;
+    opacity: 0;
+    transform: translateX(-10px);
+    animation: letter-sweep-in 0.4s ease forwards;
+  }
+
+  .letter-first {
+    transform: translateY(70%);
+    animation: letter-pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  @keyframes letter-sweep-in {
+    from {
+      opacity: 0;
+      transform: translateX(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes letter-pop-in {
+    0% {
+      opacity: 0;
+      transform: translateY(70%) scale(0.5);
+    }
+    60% {
+      opacity: 1;
+      transform: translateY(-12%) scale(1.1);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .logo-link,
     .nav-link::after,
     .cta-button,
-    .cart-button::after,
+    .cart-label::after,
+    .letter,
+    .letter-first,
     .step-heading::after,
     .lead-underline-bar,
     .highlight {
       transition: none;
+    }
+
+    .letter,
+    .letter-first {
+      animation: none;
+      opacity: 1;
+      transform: none;
     }
 
     .highlight {
@@ -359,26 +406,10 @@
     gap: 0.45em;
     background: none;
     border: none;
-    padding: 0.3em 0.4em 0.4em;
+    padding: 0.3em 0.4em;
     color: #0d0d0d;
     font-family: "Josefin Sans", Arial, sans-serif;
     cursor: pointer;
-  }
-
-  .cart-button::after {
-    content: "";
-    position: absolute;
-    left: 0.4em;
-    right: 0.4em;
-    bottom: 0;
-    height: 0.08em;
-    width: 0;
-    background-color: #0d0d0d;
-    transition: width 0.3s ease;
-  }
-
-  .cart-button:hover::after {
-    width: calc(100% - 0.8em);
   }
 
   .cart-icon-wrap {
@@ -398,12 +429,29 @@
   }
 
   .cart-label {
+    position: relative;
     font-family: "Josefin Sans", Arial, sans-serif;
     font-weight: 700;
     font-size: clamp(0.95rem, 2.2vw, 1.25rem);
     letter-spacing: 0.02em;
     color: #0d0d0d;
     white-space: nowrap;
+    padding-bottom: 0.1em;
+  }
+
+  .cart-label::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 0.08em;
+    background-color: #0d0d0d;
+    transition: width 0.3s ease;
+  }
+
+  .cart-button:hover .cart-label::after {
+    width: 100%;
   }
 
   .cart-panel {
@@ -936,6 +984,43 @@
       }
 
       renderCart();
+    })();
+  </script>
+
+  <script>
+    (function () {
+      var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduceMotion) return;
+
+      var SWEEP_START = 0.4;
+      var STAGGER = 0.045;
+
+      function animateHeaderText(el) {
+        var nodes = Array.prototype.slice.call(el.childNodes);
+        while (el.firstChild) el.removeChild(el.firstChild);
+        var unitIndex = 0;
+
+        nodes.forEach(function (node) {
+          if (node.nodeType === Node.TEXT_NODE) {
+            node.textContent.split('').forEach(function (ch) {
+              var span = document.createElement('span');
+              span.className = unitIndex === 0 ? 'letter letter-first' : 'letter';
+              span.style.animationDelay = unitIndex === 0 ? '0s' : (SWEEP_START + unitIndex * STAGGER) + 's';
+              span.textContent = ch;
+              if (ch === ' ') span.style.whiteSpace = 'pre';
+              el.appendChild(span);
+              unitIndex++;
+            });
+          } else {
+            node.classList.add('letter');
+            node.style.animationDelay = (SWEEP_START + unitIndex * STAGGER) + 's';
+            el.appendChild(node);
+            unitIndex++;
+          }
+        });
+      }
+
+      Array.prototype.forEach.call(document.querySelectorAll('.nav-link, .cart-label'), animateHeaderText);
     })();
   </script>
 </body>
