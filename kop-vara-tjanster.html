@@ -496,20 +496,7 @@
   }
 
   .cart-count {
-    position: absolute;
-    top: -0.3em;
-    right: -0.3em;
-    min-width: 1.15em;
-    height: 1.15em;
-    padding: 0 0.25em;
-    border-radius: 999px;
-    background-color: var(--amplify-black);
-    color: var(--amplify-red);
-    font-family: "Poppins", Arial, sans-serif;
-    font-size: 0.65rem;
     font-weight: 800;
-    line-height: 1.15em;
-    text-align: center;
   }
 
   .cart-label {
@@ -628,9 +615,8 @@
                 <circle cx="20" cy="21" r="1"></circle>
                 <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
               </svg>
-              <span class="cart-count">0</span>
             </span>
-            <span class="cart-label">Varukorg</span>
+            <span class="cart-label">Varukorg (<span class="cart-count">0</span> valda)</span>
           </button>
           <div class="cart-panel" id="cart-panel" hidden>
             <p class="cart-empty">Din varukorg är tom.</p>
