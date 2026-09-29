@@ -1,6 +1,14 @@
 <!doctype html>
 <html lang="sv">
 <head>
+<script>
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+  window.addEventListener('pageshow', function () {
+    window.scrollTo(0, 0);
+  });
+</script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>För UF-företag</title>
@@ -625,6 +633,16 @@
     (function () {
       var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (reduceMotion) return;
+
+      var ANIM_KEY = 'amplifyHeaderAnimPlayed';
+      var alreadyPlayed = false;
+      try {
+        alreadyPlayed = sessionStorage.getItem(ANIM_KEY) === '1';
+      } catch (e) {}
+      if (alreadyPlayed) return;
+      try {
+        sessionStorage.setItem(ANIM_KEY, '1');
+      } catch (e) {}
 
       var SWEEP_START = 0.4;
       var STAGGER = 0.045;

@@ -1,6 +1,14 @@
 <!doctype html>
 <html lang="sv">
 <head>
+<script>
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+  window.addEventListener('pageshow', function () {
+    window.scrollTo(0, 0);
+  });
+</script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Köp våra tjänster</title>
@@ -183,14 +191,22 @@
   }
 
   .nav-link.is-active {
-    background-color: #0d0d0d;
-    color: #ffffff;
-    padding: 0.35em 0.42em;
-    border-radius: 999px;
+    color: #0d0d0d;
   }
 
   .nav-link.is-active::after {
-    display: none;
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.1em;
+    width: auto;
+    height: 0.5em;
+    background-color: transparent;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 10'%3E%3Cpath d='M0 5 Q5 0 10 5 T20 5' fill='none' stroke='%230d0d0d' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: repeat-x;
+    background-position: left center;
+    background-size: 14px 8px;
   }
 
   .letter {
@@ -961,6 +977,16 @@
     (function () {
       var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (reduceMotion) return;
+
+      var ANIM_KEY = 'amplifyHeaderAnimPlayed';
+      var alreadyPlayed = false;
+      try {
+        alreadyPlayed = sessionStorage.getItem(ANIM_KEY) === '1';
+      } catch (e) {}
+      if (alreadyPlayed) return;
+      try {
+        sessionStorage.setItem(ANIM_KEY, '1');
+      } catch (e) {}
 
       var SWEEP_START = 0.4;
       var STAGGER = 0.045;
