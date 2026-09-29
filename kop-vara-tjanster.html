@@ -496,6 +496,23 @@
 
   .package-add.is-added {
     background-color: #1c7a3e;
+    cursor: default;
+  }
+
+  .package-add.is-added:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .package-add.is-blocked {
+    background-color: rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.5);
+    cursor: not-allowed;
+  }
+
+  .package-add.is-blocked:hover {
+    transform: none;
+    box-shadow: none;
   }
 
   .individual-purchase {
@@ -565,6 +582,15 @@
   .individual-list li:last-child {
     border-bottom: none;
     padding-bottom: 0;
+  }
+
+  .individual-list li.is-in-cart label {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  .individual-list li.is-in-cart input[type="checkbox"] {
+    cursor: not-allowed;
   }
 
   .individual-list label {
@@ -782,6 +808,53 @@
     color: var(--amplify-red);
   }
 
+  .cart-payment-info {
+    margin: 0.75rem 0 0;
+    padding-top: 0.6rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    font-family: "Jost", Arial, sans-serif;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: var(--amplify-black);
+    opacity: 0.85;
+  }
+
+  .cart-email-label {
+    display: block;
+    margin: 0.75rem 0 0.3rem;
+    font-family: "Jost", Arial, sans-serif;
+    font-size: 0.78rem;
+    color: var(--amplify-black);
+  }
+
+  .cart-email-input {
+    display: block;
+    width: 100%;
+    padding: 0.55em 0.7em;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 0.3em;
+    background-color: rgba(255, 255, 255, 0.06);
+    color: var(--amplify-black);
+    font-family: "Jost", Arial, sans-serif;
+    font-size: 0.85rem;
+  }
+
+  .cart-email-input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .cart-email-input:focus {
+    outline: none;
+    border-color: var(--amplify-red);
+  }
+
+  .cart-email-error {
+    margin: 0.4rem 0 0;
+    font-family: "Jost", Arial, sans-serif;
+    font-size: 0.78rem;
+    color: var(--amplify-red);
+  }
+
   .cart-checkout {
     display: block;
     width: 100%;
@@ -853,8 +926,12 @@
               Vi är ett UF-företag <span class="cart-uf-note">(50% rabatt)</span>
             </label>
             <p class="cart-total"></p>
+            <p class="cart-payment-info">Betalningen sker efter att tjänsterna levererats, efter att ordern placerats skickar vi ett mail till er. Ni är med oss under hela processen.</p>
+            <label class="cart-email-label" for="cart-email-input">E-postadress</label>
+            <input type="email" id="cart-email-input" class="cart-email-input" placeholder="namn@exempel.se" />
+            <p class="cart-email-error" hidden>Ange en giltig e-postadress för att gå vidare.</p>
             <button class="cart-checkout" type="button">Gå till betalning</button>
-            <p class="cart-confirm" hidden>Tack för din beställning! Vi hör av oss för betalning inom kort.</p>
+            <p class="cart-confirm" hidden></p>
           </div>
         </div>
       </nav>
@@ -866,7 +943,7 @@
     <p class="body-text">Välj vad ditt företag behöver — hör av dig så sätter vi ihop ett upplägg som passar er.</p>
 
     <div class="packages">
-      <article class="package-card" data-price="2499">
+      <article class="package-card" data-price="2499" data-categories="hemsida,branding,epost,sociala">
         <h2 class="package-name">Startup paketet</h2>
         <p class="package-price">2499 kr</p>
         <ul class="package-list">
@@ -878,7 +955,7 @@
         <button class="package-add" type="button">Lägg till i kundvagn</button>
       </article>
 
-      <article class="package-card package-card--full" data-price="3498">
+      <article class="package-card package-card--full" data-price="3498" data-categories="hemsida,branding,epost,sociala,grafisk,musik,video,reklamfilm">
         <p class="package-save">Spara: 1499 kr</p>
         <h2 class="package-name">Fullständiga paketet</h2>
         <p class="package-price">3498 kr</p>
@@ -895,7 +972,7 @@
         <button class="package-add" type="button">Lägg till i kundvagn</button>
       </article>
 
-      <article class="package-card" data-price="2499">
+      <article class="package-card" data-price="2499" data-categories="grafisk,musik,video,reklamfilm">
         <h2 class="package-name">Reklampaketet</h2>
         <p class="package-price">2499 kr</p>
         <ul class="package-list">
@@ -914,14 +991,14 @@
       </button>
       <div class="individual-panel" id="individual-panel" hidden>
         <ul class="individual-list">
-          <li><label><input type="checkbox" value="Skapande av eller förbättrande av befintlig hemsida" /> Skapande av eller förbättrande av befintlig hemsida</label></li>
-          <li><label><input type="checkbox" value="Branding: skapande/förbättring av logotyper, produkter, skyltning mm" /> Branding: skapande/förbättring av logotyper, produkter, skyltning mm</label></li>
-          <li><label><input type="checkbox" value="Grafisk design (flygblad, posters, visitkort mm)" /> Grafisk design (flygblad, posters, visitkort mm)</label></li>
-          <li><label><input type="checkbox" value="Musikproduktion och ljuddesign" /> Musikproduktion och ljuddesign</label></li>
-          <li><label><input type="checkbox" value="Videoredigering" /> Videoredigering</label></li>
-          <li><label><input type="checkbox" value="Fullständigt skapande av reklamfilmer" /> Fullständigt skapande av reklamfilmer</label></li>
-          <li><label><input type="checkbox" value="Skapar professionella konton på sociala medier" /> Skapar professionella konton på sociala medier</label></li>
-          <li><label><input type="checkbox" value="Skapar custom epostadresser" /> Skapar custom epostadresser</label></li>
+          <li><label><input type="checkbox" value="Skapande av eller förbättrande av befintlig hemsida" data-category="hemsida" /> Skapande av eller förbättrande av befintlig hemsida</label></li>
+          <li><label><input type="checkbox" value="Branding: skapande/förbättring av logotyper, produkter, skyltning mm" data-category="branding" /> Branding: skapande/förbättring av logotyper, produkter, skyltning mm</label></li>
+          <li><label><input type="checkbox" value="Grafisk design (flygblad, posters, visitkort mm)" data-category="grafisk" /> Grafisk design (flygblad, posters, visitkort mm)</label></li>
+          <li><label><input type="checkbox" value="Musikproduktion och ljuddesign" data-category="musik" /> Musikproduktion och ljuddesign</label></li>
+          <li><label><input type="checkbox" value="Videoredigering" data-category="video" /> Videoredigering</label></li>
+          <li><label><input type="checkbox" value="Fullständigt skapande av reklamfilmer" data-category="reklamfilm" /> Fullständigt skapande av reklamfilmer</label></li>
+          <li><label><input type="checkbox" value="Skapar professionella konton på sociala medier" data-category="sociala" /> Skapar professionella konton på sociala medier</label></li>
+          <li><label><input type="checkbox" value="Skapar custom epostadresser" data-category="epost" /> Skapar custom epostadresser</label></li>
         </ul>
         <button class="individual-confirm" type="button">Lägg till</button>
       </div>
@@ -978,6 +1055,19 @@
       var cartUfCheckbox = document.querySelector('#cart-uf-checkbox');
       var cartCheckoutBtn = document.querySelector('.cart-checkout');
       var cartConfirmEl = document.querySelector('.cart-confirm');
+      var cartEmailInput = document.querySelector('#cart-email-input');
+      var cartEmailError = document.querySelector('.cart-email-error');
+
+      var ORDERS_KEY = 'amplifyOrders';
+
+      function saveOrder(order) {
+        try {
+          var raw = localStorage.getItem(ORDERS_KEY);
+          var orders = raw ? JSON.parse(raw) : [];
+          orders.push(order);
+          localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
+        } catch (e) {}
+      }
 
       if (cartUfCheckbox) cartUfCheckbox.checked = ufDiscount;
 
@@ -1011,6 +1101,7 @@
               cart.splice(i, 1);
               saveCart(cart);
               renderCart();
+              notifyChange();
             });
             li.appendChild(nameSpan);
             li.appendChild(priceSpan);
@@ -1040,11 +1131,28 @@
         }
       }
 
+      var changeListeners = [];
+
+      function notifyChange() {
+        changeListeners.forEach(function (fn) {
+          try {
+            fn(cart.slice());
+          } catch (e) {}
+        });
+      }
+
       window.amplifyCart = {
-        add: function (name, price) {
-          cart.push({ name: name, price: price || 0 });
+        add: function (name, price, categories) {
+          cart.push({ name: name, price: price || 0, categories: categories || [] });
           saveCart(cart);
           renderCart();
+          notifyChange();
+        },
+        getItems: function () {
+          return cart.slice();
+        },
+        onChange: function (fn) {
+          changeListeners.push(fn);
         }
       };
 
@@ -1074,16 +1182,43 @@
       if (cartCheckoutBtn) {
         cartCheckoutBtn.addEventListener('click', function () {
           if (cart.length === 0) return;
+          var email = cartEmailInput ? cartEmailInput.value.trim() : '';
+          var emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+          if (!emailValid) {
+            if (cartEmailError) cartEmailError.hidden = false;
+            if (cartEmailInput) cartEmailInput.focus();
+            return;
+          }
+          if (cartEmailError) cartEmailError.hidden = true;
+
+          var orderTotal = cart.reduce(function (sum, item) { return sum + (item.price || 0); }, 0);
+          saveOrder({
+            email: email,
+            items: cart.slice(),
+            ufDiscount: ufDiscount,
+            total: ufDiscount ? Math.round(orderTotal * 0.5) : orderTotal,
+            date: new Date().toISOString()
+          });
+
           if (cartItemsEl) cartItemsEl.hidden = true;
           if (cartEmptyEl) cartEmptyEl.hidden = true;
           var ufToggle = document.querySelector('.cart-uf-toggle');
           if (ufToggle) ufToggle.hidden = true;
           if (cartTotalEl) cartTotalEl.hidden = true;
+          var paymentInfo = document.querySelector('.cart-payment-info');
+          if (paymentInfo) paymentInfo.hidden = true;
+          var emailLabel = document.querySelector('.cart-email-label');
+          if (emailLabel) emailLabel.hidden = true;
+          if (cartEmailInput) cartEmailInput.hidden = true;
           cartCheckoutBtn.hidden = true;
-          if (cartConfirmEl) cartConfirmEl.hidden = false;
+          if (cartConfirmEl) {
+            cartConfirmEl.textContent = 'Tack för din beställning! Vi hör av oss till ' + email + ' för betalning inom kort.';
+            cartConfirmEl.hidden = false;
+          }
           cart = [];
           saveCart(cart);
           if (cartCount) cartCount.textContent = cart.length;
+          notifyChange();
         });
       }
 
@@ -1093,18 +1228,79 @@
 
   <script>
     (function () {
-      Array.prototype.forEach.call(document.querySelectorAll('.package-add'), function (btn) {
+      var packageButtons = Array.prototype.slice.call(document.querySelectorAll('.package-add'));
+      var checkboxes = Array.prototype.slice.call(document.querySelectorAll('.individual-list input[type="checkbox"]'));
+
+      function getCartItems() {
+        return (window.amplifyCart && window.amplifyCart.getItems) ? window.amplifyCart.getItems() : [];
+      }
+
+      function findCartItemByName(name) {
+        var items = getCartItems();
+        for (var i = 0; i < items.length; i++) {
+          if (items[i].name === name) return items[i];
+        }
+        return null;
+      }
+
+      function coveredCategories() {
+        var covered = {};
+        getCartItems().forEach(function (item) {
+          (item.categories || []).forEach(function (c) { covered[c] = true; });
+        });
+        return covered;
+      }
+
+      function categoriesOverlap(categories, covered) {
+        return categories.some(function (c) { return covered[c]; });
+      }
+
+      function refreshUI() {
+        var covered = coveredCategories();
+
+        packageButtons.forEach(function (btn) {
+          var card = btn.closest('.package-card');
+          var name = card.querySelector('.package-name').textContent;
+          var categories = (card.getAttribute('data-categories') || '').split(',').filter(Boolean);
+
+          if (findCartItemByName(name)) {
+            btn.textContent = 'Tillagd ✓';
+            btn.className = 'package-add is-added';
+            btn.disabled = true;
+          } else if (categoriesOverlap(categories, covered)) {
+            btn.textContent = 'Ingår redan';
+            btn.className = 'package-add is-blocked';
+            btn.disabled = true;
+          } else {
+            btn.textContent = 'Lägg till i kundvagn';
+            btn.className = 'package-add';
+            btn.disabled = false;
+          }
+        });
+
+        checkboxes.forEach(function (cb) {
+          var category = cb.getAttribute('data-category');
+          var li = cb.closest('li');
+          var blocked = !!findCartItemByName(cb.value) || (category && covered[category]);
+          if (blocked) {
+            cb.checked = false;
+            cb.disabled = true;
+            if (li) li.classList.add('is-in-cart');
+          } else {
+            cb.disabled = false;
+            if (li) li.classList.remove('is-in-cart');
+          }
+        });
+      }
+
+      packageButtons.forEach(function (btn) {
         btn.addEventListener('click', function () {
+          if (btn.disabled) return;
           var card = btn.closest('.package-card');
           var name = card.querySelector('.package-name').textContent;
           var price = parseInt(card.getAttribute('data-price'), 10) || 0;
-          if (window.amplifyCart) window.amplifyCart.add(name, price);
-          btn.textContent = 'Tillagd ✓';
-          btn.classList.add('is-added');
-          setTimeout(function () {
-            btn.textContent = 'Lägg till i kundvagn';
-            btn.classList.remove('is-added');
-          }, 1500);
+          var categories = (card.getAttribute('data-categories') || '').split(',').filter(Boolean);
+          if (window.amplifyCart) window.amplifyCart.add(name, price, categories);
         });
       });
 
@@ -1130,7 +1326,9 @@
         confirmBtn.addEventListener('click', function () {
           var checked = document.querySelectorAll('.individual-list input[type="checkbox"]:checked');
           Array.prototype.forEach.call(checked, function (cb) {
-            if (window.amplifyCart) window.amplifyCart.add(cb.value, 0);
+            if (cb.disabled) return;
+            var category = cb.getAttribute('data-category');
+            if (window.amplifyCart) window.amplifyCart.add(cb.value, 0, category ? [category] : []);
             cb.checked = false;
           });
           if (panel) {
@@ -1139,6 +1337,11 @@
           }
         });
       }
+
+      if (window.amplifyCart && window.amplifyCart.onChange) {
+        window.amplifyCart.onChange(refreshUI);
+      }
+      refreshUI();
     })();
   </script>
 

@@ -679,6 +679,53 @@
     color: var(--amplify-red);
   }
 
+  .cart-payment-info {
+    margin: 0.75rem 0 0;
+    padding-top: 0.6rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    font-family: "Jost", Arial, sans-serif;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: var(--amplify-black);
+    opacity: 0.85;
+  }
+
+  .cart-email-label {
+    display: block;
+    margin: 0.75rem 0 0.3rem;
+    font-family: "Jost", Arial, sans-serif;
+    font-size: 0.78rem;
+    color: var(--amplify-black);
+  }
+
+  .cart-email-input {
+    display: block;
+    width: 100%;
+    padding: 0.55em 0.7em;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 0.3em;
+    background-color: rgba(255, 255, 255, 0.06);
+    color: var(--amplify-black);
+    font-family: "Jost", Arial, sans-serif;
+    font-size: 0.85rem;
+  }
+
+  .cart-email-input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .cart-email-input:focus {
+    outline: none;
+    border-color: var(--amplify-red);
+  }
+
+  .cart-email-error {
+    margin: 0.4rem 0 0;
+    font-family: "Jost", Arial, sans-serif;
+    font-size: 0.78rem;
+    color: var(--amplify-red);
+  }
+
   .cart-checkout {
     display: block;
     width: 100%;
@@ -863,8 +910,12 @@
               Vi är ett UF-företag <span class="cart-uf-note">(50% rabatt)</span>
             </label>
             <p class="cart-total"></p>
+            <p class="cart-payment-info">Betalningen sker efter att tjänsterna levererats, efter att ordern placerats skickar vi ett mail till er. Ni är med oss under hela processen.</p>
+            <label class="cart-email-label" for="cart-email-input">E-postadress</label>
+            <input type="email" id="cart-email-input" class="cart-email-input" placeholder="namn@exempel.se" />
+            <p class="cart-email-error" hidden>Ange en giltig e-postadress för att gå vidare.</p>
             <button class="cart-checkout" type="button">Gå till betalning</button>
-            <p class="cart-confirm" hidden>Tack för din beställning! Vi hör av oss för betalning inom kort.</p>
+            <p class="cart-confirm" hidden></p>
           </div>
         </div>
       </nav>
@@ -1122,6 +1173,19 @@
       var cartUfCheckbox = document.querySelector('#cart-uf-checkbox');
       var cartCheckoutBtn = document.querySelector('.cart-checkout');
       var cartConfirmEl = document.querySelector('.cart-confirm');
+      var cartEmailInput = document.querySelector('#cart-email-input');
+      var cartEmailError = document.querySelector('.cart-email-error');
+
+      var ORDERS_KEY = 'amplifyOrders';
+
+      function saveOrder(order) {
+        try {
+          var raw = localStorage.getItem(ORDERS_KEY);
+          var orders = raw ? JSON.parse(raw) : [];
+          orders.push(order);
+          localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
+        } catch (e) {}
+      }
 
       if (cartUfCheckbox) cartUfCheckbox.checked = ufDiscount;
 
@@ -1155,6 +1219,7 @@
               cart.splice(i, 1);
               saveCart(cart);
               renderCart();
+              notifyChange();
             });
             li.appendChild(nameSpan);
             li.appendChild(priceSpan);
@@ -1184,11 +1249,28 @@
         }
       }
 
+      var changeListeners = [];
+
+      function notifyChange() {
+        changeListeners.forEach(function (fn) {
+          try {
+            fn(cart.slice());
+          } catch (e) {}
+        });
+      }
+
       window.amplifyCart = {
-        add: function (name, price) {
-          cart.push({ name: name, price: price || 0 });
+        add: function (name, price, categories) {
+          cart.push({ name: name, price: price || 0, categories: categories || [] });
           saveCart(cart);
           renderCart();
+          notifyChange();
+        },
+        getItems: function () {
+          return cart.slice();
+        },
+        onChange: function (fn) {
+          changeListeners.push(fn);
         }
       };
 
@@ -1218,16 +1300,43 @@
       if (cartCheckoutBtn) {
         cartCheckoutBtn.addEventListener('click', function () {
           if (cart.length === 0) return;
+          var email = cartEmailInput ? cartEmailInput.value.trim() : '';
+          var emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+          if (!emailValid) {
+            if (cartEmailError) cartEmailError.hidden = false;
+            if (cartEmailInput) cartEmailInput.focus();
+            return;
+          }
+          if (cartEmailError) cartEmailError.hidden = true;
+
+          var orderTotal = cart.reduce(function (sum, item) { return sum + (item.price || 0); }, 0);
+          saveOrder({
+            email: email,
+            items: cart.slice(),
+            ufDiscount: ufDiscount,
+            total: ufDiscount ? Math.round(orderTotal * 0.5) : orderTotal,
+            date: new Date().toISOString()
+          });
+
           if (cartItemsEl) cartItemsEl.hidden = true;
           if (cartEmptyEl) cartEmptyEl.hidden = true;
           var ufToggle = document.querySelector('.cart-uf-toggle');
           if (ufToggle) ufToggle.hidden = true;
           if (cartTotalEl) cartTotalEl.hidden = true;
+          var paymentInfo = document.querySelector('.cart-payment-info');
+          if (paymentInfo) paymentInfo.hidden = true;
+          var emailLabel = document.querySelector('.cart-email-label');
+          if (emailLabel) emailLabel.hidden = true;
+          if (cartEmailInput) cartEmailInput.hidden = true;
           cartCheckoutBtn.hidden = true;
-          if (cartConfirmEl) cartConfirmEl.hidden = false;
+          if (cartConfirmEl) {
+            cartConfirmEl.textContent = 'Tack för din beställning! Vi hör av oss till ' + email + ' för betalning inom kort.';
+            cartConfirmEl.hidden = false;
+          }
           cart = [];
           saveCart(cart);
           if (cartCount) cartCount.textContent = cart.length;
+          notifyChange();
         });
       }
 
