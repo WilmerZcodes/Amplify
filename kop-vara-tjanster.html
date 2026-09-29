@@ -735,6 +735,32 @@
     opacity: 1;
   }
 
+  .cart-uf-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    font-family: "Jost", Arial, sans-serif;
+    font-size: 0.85rem;
+    color: var(--amplify-black);
+    cursor: pointer;
+  }
+
+  .cart-uf-toggle input[type="checkbox"] {
+    flex: 0 0 auto;
+    width: 1.05em;
+    height: 1.05em;
+    accent-color: var(--amplify-red);
+    cursor: pointer;
+  }
+
+  .cart-uf-note {
+    color: var(--amplify-red);
+    font-weight: 700;
+  }
+
   .cart-total {
     margin: 0;
     padding-top: 0.6rem;
@@ -742,6 +768,46 @@
     font-family: "Poppins", Arial, sans-serif;
     font-weight: 700;
     font-size: 0.9rem;
+    color: var(--amplify-black);
+  }
+
+  .cart-total-original {
+    margin-right: 0.4em;
+    font-weight: 400;
+    text-decoration: line-through;
+    opacity: 0.55;
+  }
+
+  .cart-total-discounted {
+    color: var(--amplify-red);
+  }
+
+  .cart-checkout {
+    display: block;
+    width: 100%;
+    margin-top: 0.75rem;
+    padding: 0.7em 1em;
+    border: none;
+    border-radius: 0.4em;
+    background-color: var(--amplify-red);
+    color: var(--amplify-black);
+    font-family: "Poppins", Arial, sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  .cart-checkout:hover {
+    transform: translateY(-2px);
+  }
+
+  .cart-confirm {
+    margin: 0.75rem 0 0;
+    font-family: "Jost", Arial, sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.5;
     color: var(--amplify-black);
   }
 
@@ -782,7 +848,13 @@
           <div class="cart-panel" id="cart-panel" hidden>
             <p class="cart-empty">Din varukorg är tom.</p>
             <ul class="cart-items"></ul>
+            <label class="cart-uf-toggle">
+              <input type="checkbox" id="cart-uf-checkbox" />
+              Vi är ett UF-företag <span class="cart-uf-note">(50% rabatt)</span>
+            </label>
             <p class="cart-total"></p>
+            <button class="cart-checkout" type="button">Gå till betalning</button>
+            <p class="cart-confirm" hidden>Tack för din beställning! Vi hör av oss för betalning inom kort.</p>
           </div>
         </div>
       </nav>
@@ -862,6 +934,7 @@
   <script>
     (function () {
       var CART_KEY = 'amplifyCart';
+      var UF_KEY = 'amplifyUfDiscount';
 
       function loadCart() {
         try {
@@ -878,7 +951,22 @@
         } catch (e) {}
       }
 
+      function loadUfDiscount() {
+        try {
+          return localStorage.getItem(UF_KEY) === '1';
+        } catch (e) {
+          return false;
+        }
+      }
+
+      function saveUfDiscount(value) {
+        try {
+          localStorage.setItem(UF_KEY, value ? '1' : '0');
+        } catch (e) {}
+      }
+
       var cart = loadCart();
+      var ufDiscount = loadUfDiscount();
 
       var cartWrap = document.querySelector('.cart-wrap');
       var cartButton = document.querySelector('.cart-button');
@@ -887,6 +975,11 @@
       var cartItemsEl = document.querySelector('.cart-items');
       var cartEmptyEl = document.querySelector('.cart-empty');
       var cartTotalEl = document.querySelector('.cart-total');
+      var cartUfCheckbox = document.querySelector('#cart-uf-checkbox');
+      var cartCheckoutBtn = document.querySelector('.cart-checkout');
+      var cartConfirmEl = document.querySelector('.cart-confirm');
+
+      if (cartUfCheckbox) cartUfCheckbox.checked = ufDiscount;
 
       function formatPrice(n) {
         return n.toLocaleString('sv-SE') + ' kr';
@@ -926,7 +1019,25 @@
           });
         }
         var total = cart.reduce(function (sum, item) { return sum + (item.price || 0); }, 0);
-        if (cartTotalEl) cartTotalEl.textContent = total > 0 ? 'Totalt: ' + formatPrice(total) : '';
+        if (cartTotalEl) {
+          cartTotalEl.innerHTML = '';
+          if (total > 0) {
+            if (ufDiscount) {
+              var discounted = Math.round(total * 0.5);
+              var originalSpan = document.createElement('span');
+              originalSpan.className = 'cart-total-original';
+              originalSpan.textContent = formatPrice(total);
+              var discountedSpan = document.createElement('span');
+              discountedSpan.className = 'cart-total-discounted';
+              discountedSpan.textContent = formatPrice(discounted);
+              cartTotalEl.appendChild(document.createTextNode('Totalt: '));
+              cartTotalEl.appendChild(originalSpan);
+              cartTotalEl.appendChild(discountedSpan);
+            } else {
+              cartTotalEl.textContent = 'Totalt: ' + formatPrice(total);
+            }
+          }
+        }
       }
 
       window.amplifyCart = {
@@ -949,6 +1060,30 @@
             cartPanel.hidden = true;
             cartButton.setAttribute('aria-expanded', 'false');
           }
+        });
+      }
+
+      if (cartUfCheckbox) {
+        cartUfCheckbox.addEventListener('change', function () {
+          ufDiscount = cartUfCheckbox.checked;
+          saveUfDiscount(ufDiscount);
+          renderCart();
+        });
+      }
+
+      if (cartCheckoutBtn) {
+        cartCheckoutBtn.addEventListener('click', function () {
+          if (cart.length === 0) return;
+          if (cartItemsEl) cartItemsEl.hidden = true;
+          if (cartEmptyEl) cartEmptyEl.hidden = true;
+          var ufToggle = document.querySelector('.cart-uf-toggle');
+          if (ufToggle) ufToggle.hidden = true;
+          if (cartTotalEl) cartTotalEl.hidden = true;
+          cartCheckoutBtn.hidden = true;
+          if (cartConfirmEl) cartConfirmEl.hidden = false;
+          cart = [];
+          saveCart(cart);
+          if (cartCount) cartCount.textContent = cart.length;
         });
       }
 
