@@ -81,33 +81,6 @@
     padding-inline: clamp(16px, 4vw, 48px);
   }
 
-  .brand-group {
-    display: flex;
-    align-items: center;
-    gap: 0.9rem;
-  }
-
-  .header-tagline {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.35em 0.85em;
-    border: 1px solid rgba(13, 13, 13, 0.35);
-    border-radius: 999px;
-    font-family: "Josefin Sans", Arial, sans-serif;
-    font-weight: 700;
-    font-size: clamp(0.65rem, 1.4vw, 0.8rem);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: #0d0d0d;
-    white-space: nowrap;
-  }
-
-  @media (max-width: 480px) {
-    .brand-group {
-      flex-wrap: wrap;
-      row-gap: 0.5rem;
-    }
-  }
 
   .nav-group {
     display: flex;
@@ -175,6 +148,10 @@
 
   .nav-link:hover::after {
     width: 100%;
+  }
+
+  .nav-link-static {
+    cursor: default;
   }
 
   .nav-link.is-active {
@@ -492,11 +469,9 @@
 <body>
   <header>
     <div class="header-inner">
-      <div class="brand-group">
-        <a class="logo-link" href="index.html"><img class="logo" src="bild__1_-removebg-preview.png" alt="Amplify" /></a>
-        <span class="header-tagline">För UF-företag</span>
-      </div>
+      <a class="logo-link" href="index.html"><img class="logo" src="bild__1_-removebg-preview.png" alt="Amplify" /></a>
       <nav class="nav-group">
+        <span class="nav-link nav-link-static">För UF-företag</span>
         <a class="nav-link is-active" href="vi-pa-amplify.html">Vi på Amplify</a>
         <a class="nav-link" href="kop-vara-tjanster.html">Köp våra tjänster</a>
         <div class="cart-wrap">
