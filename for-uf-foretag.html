@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Amplify</title>
+<title>För UF-företag</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400&display=swap" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600;700&display=swap" />
@@ -11,8 +11,8 @@
   :root {
     --amplify-red: #fb2623;
     --amplify-white: #0d0d0d;
-    --amplify-black: #ffffff;
     --amplify-page-bg: #0d0d0d;
+    --amplify-black: #ffffff;
   }
 
   * {
@@ -236,10 +236,7 @@
     .cta-button,
     .cart-label::after,
     .letter,
-    .letter-first,
-    .step-heading::after,
-    .lead-underline-bar,
-    .highlight {
+    .letter-first {
       transition: none;
     }
 
@@ -248,10 +245,6 @@
       animation: none;
       opacity: 1;
       transform: none;
-    }
-
-    .highlight {
-      animation: none;
     }
 
     .header-spotlight::before {
@@ -266,177 +259,69 @@
     padding: clamp(2rem, 6vh, 4rem) clamp(1.5rem, 6vw, 4rem);
   }
 
-  .headline {
-    position: relative;
-    margin: 0;
-    max-width: 16ch;
+  .page-title {
+    margin: 0 0 clamp(1.25rem, 4vh, 2rem);
     font-family: "Poppins", Arial, sans-serif;
-    font-weight: 800;
-    font-size: clamp(1.6rem, 7vw, 4.75rem);
-    line-height: 1.42;
-    letter-spacing: 0.005em;
-    color: var(--amplify-black);
-    text-wrap: balance;
-  }
-
-  @media (max-width: 640px) {
-    .section-title {
-      font-size: clamp(1.05rem, 5.2vw, 1.5rem);
-    }
-  }
-
-  .lead-underline-layer {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-  }
-
-  .lead-underline-bar {
-    position: absolute;
-    height: 2px;
-    background-color: var(--amplify-black);
-    transform: scaleX(0);
-    transform-origin: left center;
-    transition: transform 0.2s ease;
-  }
-
-  .lead-underline-bar.is-filled {
-    transform: scaleX(1);
-  }
-
-  .highlight {
-    display: inline-block;
-    margin-top: 0.22em;
     font-weight: 900;
-    background-color: var(--amplify-black);
-    color: var(--amplify-white);
-    padding: 0.05em 0.3em;
-    border-radius: 0.15em;
-    box-decoration-break: clone;
-    -webkit-box-decoration-break: clone;
-    animation: highlight-in 0.7s 0.15s cubic-bezier(0.22, 1, 0.36, 1) backwards;
-    transition: transform 0.3s ease;
-  }
-
-  .highlight:hover {
-    transform: scale(1.08);
-  }
-
-  @keyframes highlight-in {
-    0% {
-      opacity: 0;
-      transform: translateY(0.4em) scale(0.92);
-    }
-    60% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-  }
-
-  .section-title {
-    margin: clamp(3rem, 8vh, 5rem) 0 0;
-    font-family: "Poppins", Arial, sans-serif;
-    font-weight: 800;
-    font-size: clamp(0.85rem, 2.3vw, 1.85rem);
+    font-size: clamp(1.5rem, 4.5vw, 2.75rem);
     letter-spacing: 0.01em;
     color: var(--amplify-black);
   }
 
   .body-text {
-    margin: 0.85rem 0 0;
-    max-width: 40ch;
-    font-family: "Jost", Arial, sans-serif;
-    font-weight: 300;
-    font-size: clamp(1.35rem, 3.2vw, 2rem);
-    line-height: 1.4;
-    color: var(--amplify-black);
-  }
-
-  .service-list {
-    margin: 0.9rem 0 0;
-    padding: 0;
+    margin: 0 0 clamp(2rem, 6vh, 3rem);
     max-width: 56ch;
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.65rem;
-  }
-
-  .service-list li {
-    position: relative;
-    padding-left: 1.3em;
     font-family: "Jost", Arial, sans-serif;
     font-weight: 300;
     font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+    line-height: 1.6;
+    color: var(--amplify-black);
+  }
+
+  .section-title {
+    margin: 0 0 1.25rem;
+    font-family: "Poppins", Arial, sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.05rem, 2.6vw, 1.4rem);
+    letter-spacing: 0.01em;
+    color: var(--amplify-black);
+  }
+
+  .benefit-list {
+    margin: 0 0 clamp(2rem, 6vh, 3rem);
+    padding: 0;
+    list-style: none;
+    max-width: 640px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .benefit-list li {
+    position: relative;
+    padding-left: 1.4em;
+    font-family: "Jost", Arial, sans-serif;
+    font-weight: 300;
+    font-size: clamp(0.95rem, 1.6vw, 1.1rem);
     line-height: 1.5;
     color: var(--amplify-black);
   }
 
-  .service-list li::before {
+  .benefit-list li::before {
     content: "";
     position: absolute;
     left: 0;
-    top: 0.68em;
-    width: 0.65rem;
+    top: 0.7em;
+    width: 0.7rem;
     height: 2px;
     background-color: var(--amplify-red);
-    opacity: 0;
-    transform: scale(0) rotate(0deg);
-    box-shadow: 0 0 0 0 rgba(251, 38, 35, 0);
-  }
-
-  .service-list li.is-visible::before {
-    animation: dash-pop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-  }
-
-  @keyframes dash-pop {
-    0% {
-      opacity: 0;
-      transform: scale(0) rotate(0deg);
-      box-shadow: 0 0 0 0 rgba(251, 38, 35, 0.65);
-    }
-    45% {
-      opacity: 1;
-      transform: scale(1.7) rotate(430deg);
-      box-shadow: 0 0 10px 6px rgba(251, 38, 35, 0.45);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1) rotate(720deg);
-      box-shadow: 0 0 0 0 rgba(251, 38, 35, 0);
-    }
-  }
-
-  .service-text {
-    display: inline-block;
-    clip-path: inset(0 100% 0 0);
-    transition: clip-path 0.5s ease 0.2s;
-  }
-
-  .service-list li.is-visible .service-text {
-    clip-path: inset(0 0% 0 0);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .service-list li.is-visible::before {
-      animation: none;
-      opacity: 1;
-      transform: scale(1) rotate(0deg);
-    }
-
-    .service-text {
-      transition: none;
-    }
   }
 
   .cta-button {
     display: inline-block;
-    margin: clamp(1.25rem, 4vh, 2rem) 0 0;
+    margin: clamp(1rem, 3vh, 1.5rem) 0 0;
     background-color: var(--amplify-red);
-    color: var(--amplify-white);
+    color: var(--amplify-black);
     font-family: "Poppins", Arial, sans-serif;
     font-weight: 800;
     font-size: clamp(0.9rem, 1.8vw, 1.1rem);
@@ -591,132 +476,6 @@
     font-size: 0.9rem;
     color: var(--amplify-black);
   }
-
-  .contact-link {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .steps-rail {
-    position: relative;
-    counter-reset: step;
-    padding-left: clamp(2rem, 6vw, 2.75rem);
-  }
-
-  .rail-fill {
-    position: absolute;
-    left: -1px;
-    top: 0;
-    width: 2px;
-    height: 0;
-    background-color: var(--amplify-black);
-    transition: height ease;
-  }
-
-  .step-heading {
-    position: relative;
-  }
-
-  .step-heading::before {
-    counter-increment: step;
-    content: counter(step);
-    position: absolute;
-    left: calc(-1 * (clamp(2rem, 6vw, 2.75rem) + 0.95rem));
-    top: 0;
-    width: 1.9rem;
-    height: 1.9rem;
-    border-radius: 50%;
-    background-color: var(--amplify-red);
-    color: var(--amplify-white);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: "Courier New", Courier, monospace;
-    font-weight: 800;
-    font-size: 0.85rem;
-    box-shadow: 0 0 0 5px var(--amplify-page-bg);
-    opacity: 0;
-    transform: scale(0.3);
-  }
-
-  .step-heading.is-visible::before {
-    opacity: 1;
-    transform: scale(1);
-    animation: badge-pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  .step-heading.pop-done::before {
-    animation: none;
-  }
-
-  @keyframes badge-pop {
-    0% {
-      opacity: 0;
-      transform: scale(0.3);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-
-  .step-heading::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -0.25em;
-    width: 0;
-    height: 2px;
-    background-color: var(--amplify-red);
-    transition: width 0.35s ease;
-  }
-
-  .step-heading.is-visible:hover::before {
-    animation: badge-spin 0.6s ease;
-  }
-
-  @keyframes badge-spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  .step-heading:hover::after {
-    width: 100%;
-  }
-
-  @media (max-width: 480px) {
-    .steps-rail {
-      padding-left: 2.1rem;
-    }
-
-    .step-heading::before {
-      left: calc(-1 * (2.1rem + 0.8rem));
-      width: 1.6rem;
-      height: 1.6rem;
-      font-size: 0.75rem;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .step-heading::before {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    .step-heading.is-visible::before,
-    .step-heading.is-visible:hover::before {
-      animation: none;
-    }
-
-    .rail-fill,
-    .rail-fill * {
-      transition: none !important;
-    }
-  }
 </style>
 </head>
 <body>
@@ -725,7 +484,7 @@
     <div class="header-inner">
       <a class="logo-link" href="index.html"><img class="logo" src="bild__1_-removebg-preview.png" alt="Amplify" /></a>
       <nav class="nav-group">
-        <a class="nav-link" href="for-uf-foretag.html">För UF-företag</a>
+        <a class="nav-link is-active" href="for-uf-foretag.html">För UF-företag</a>
         <a class="nav-link" href="vi-pa-amplify.html">Vi på Amplify</a>
         <a class="nav-link" href="kop-vara-tjanster.html">Köp våra tjänster</a>
         <div class="cart-wrap">
@@ -750,208 +509,20 @@
     <div class="scroll-progress"><div class="scroll-progress-bar"></div></div>
   </header>
   <main>
-    <h1 class="headline"><span class="headline-lead">Bli hörd på marknaden</span>, <span class="highlight">amplifiera din marknadsvolym</span></h1>
-    <div class="steps-rail">
-      <div class="rail-fill"></div>
-      <h2 class="section-title step-heading">Vad vi gör för ditt företag</h2>
-      <p class="body-text">Gör en makeover på ditt varumärke och exponerar dig till en större marknad.</p>
-      <h2 class="section-title step-heading">Våra tjänster</h2>
-      <ul class="service-list">
-        <li><span class="service-text">Skapande av eller förbättrande av befintlig hemsida</span></li>
-        <li><span class="service-text">Branding: skapande/förbättring av logotyper, produkter, skyltning mm</span></li>
-        <li><span class="service-text">Grafisk design (flygblad, posters, visitkort mm)</span></li>
-        <li><span class="service-text">Musikproduktion och ljuddesign</span></li>
-        <li><span class="service-text">Videoredigering</span></li>
-        <li><span class="service-text">Fullständigt skapande av reklamfilmer</span></li>
-        <li><span class="service-text">Skapar professionella konton på sociala medier</span></li>
-        <li><span class="service-text">Skapar custom epostadresser</span></li>
-      </ul>
-      <h2 class="section-title step-heading">Ett företag innan och efter amplify</h2>
+    <h1 class="page-title">För UF-företag</h1>
+    <p class="body-text">Vi är själva ett UF-företag och vet hur det är att bygga ett varumärke på skoltid och skolbudget. Därför erbjuder vi andra UF-företag anpassade priser och upplägg som faktiskt går att få plats med under ett läsår.</p>
 
-      <h2 class="section-title step-heading"><a class="contact-link" href="vi-pa-amplify.html">Intresserad? Kontakta oss.</a></h2>
-    </div>
+    <h2 class="section-title">Varför UF-företag väljer Amplify</h2>
+    <ul class="benefit-list">
+      <li>Anpassade priser för UF-budget</li>
+      <li>Vi förstår tidsramen ett UF-år sätter</li>
+      <li>Snabb leverans och tydlig kommunikation</li>
+      <li>Samma tjänster som riktiga företag använder</li>
+    </ul>
 
     <a class="cta-button" href="kop-vara-tjanster.html">Köp våra tjänster</a>
   </main>
   <footer></footer>
-
-  <script>
-    (function () {
-      var rail = document.querySelector('.steps-rail');
-      var fill = rail ? rail.querySelector('.rail-fill') : null;
-      var headings = rail ? Array.prototype.slice.call(rail.querySelectorAll('.step-heading')) : [];
-      if (!rail || !fill || !headings.length) return;
-
-      var serviceItems = Array.prototype.slice.call(document.querySelectorAll('.service-list li'));
-
-      function revealServiceList() {
-        serviceItems.forEach(function (li, i) {
-          setTimeout(function () {
-            li.classList.add('is-visible');
-          }, i * 90);
-        });
-      }
-
-      var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduceMotion) {
-        headings.forEach(function (h) { h.classList.add('is-visible', 'pop-done'); });
-        serviceItems.forEach(function (li) { li.classList.add('is-visible'); });
-        fill.style.height = '100%';
-        return;
-      }
-
-      function positions() {
-        return headings.map(function (h) { return h.offsetTop; });
-      }
-
-      function currentHeight() {
-        return fill.getBoundingClientRect().height;
-      }
-
-      function growTo(px, duration) {
-        return new Promise(function (resolve) {
-          fill.style.transitionDuration = duration + 'ms';
-          requestAnimationFrame(function () {
-            fill.style.height = px + 'px';
-          });
-          setTimeout(resolve, duration);
-        });
-      }
-
-      function wait(ms) {
-        return new Promise(function (resolve) { setTimeout(resolve, ms); });
-      }
-
-      function revealBadge(h) {
-        h.classList.add('is-visible');
-        setTimeout(function () { h.classList.add('pop-done'); }, 460);
-      }
-
-      var POP_DURATION = 460;
-      var pos = positions();
-      var queue = [];
-      var done = [];
-      var running = false;
-
-      async function runQueue() {
-        if (running) return;
-        running = true;
-        while (queue.length) {
-          var i = queue.shift();
-          if (done[i]) continue;
-          done[i] = true;
-          var from = currentHeight();
-          var dist = Math.abs(pos[i] - from);
-          var duration = Math.max(300, Math.min(900, dist * 1.1));
-          await growTo(pos[i], duration);
-          if (i === 1) revealServiceList();
-          revealBadge(headings[i]);
-          await wait(POP_DURATION);
-          if (i === headings.length - 1) {
-            await growTo(rail.offsetHeight, 250);
-          }
-        }
-        running = false;
-      }
-
-      function enqueue(i) {
-        if (done[i] || queue.indexOf(i) !== -1) return;
-        queue.push(i);
-        queue.sort(function (a, b) { return a - b; });
-        runQueue();
-      }
-
-      var observer = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (!entry.isIntersecting) return;
-          var idx = headings.indexOf(entry.target);
-          observer.unobserve(entry.target);
-          enqueue(idx);
-        });
-      }, { threshold: 0, rootMargin: '0px 0px 20% 0px' });
-
-      headings.forEach(function (h) { observer.observe(h); });
-    })();
-
-    (function () {
-      var headline = document.querySelector('.headline');
-      var lead = headline ? headline.querySelector('.headline-lead') : null;
-      if (!headline || !lead) return;
-
-      var layer = document.createElement('span');
-      layer.className = 'lead-underline-layer';
-      headline.appendChild(layer);
-
-      var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var bars = [];
-      var played = false;
-
-      function wait(ms) {
-        return new Promise(function (resolve) { setTimeout(resolve, ms); });
-      }
-
-      function buildBars() {
-        layer.innerHTML = '';
-        bars = [];
-        var range = document.createRange();
-        range.selectNodeContents(lead);
-        var rects = range.getClientRects();
-        var headlineRect = headline.getBoundingClientRect();
-        Array.prototype.forEach.call(rects, function (rect) {
-          var bar = document.createElement('span');
-          bar.className = 'lead-underline-bar';
-          bar.style.left = (rect.left - headlineRect.left) + 'px';
-          bar.style.top = (rect.bottom - headlineRect.top - 4) + 'px';
-          bar.style.width = rect.width + 'px';
-          layer.appendChild(bar);
-          bars.push(bar);
-        });
-      }
-
-      function nextFrame() {
-        return new Promise(function (resolve) {
-          requestAnimationFrame(function () { requestAnimationFrame(resolve); });
-        });
-      }
-
-      async function playSequence() {
-        buildBars();
-
-        if (reduceMotion) {
-          bars.forEach(function (bar) { bar.classList.add('is-filled'); });
-          return;
-        }
-
-        await nextFrame();
-
-        for (var i = 0; i < bars.length; i++) {
-          bars[i].classList.add('is-filled');
-          await wait(200);
-        }
-      }
-
-      var observer = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (!entry.isIntersecting || played) return;
-          played = true;
-          observer.disconnect();
-          playSequence();
-        });
-      }, { threshold: 0, rootMargin: '0px 0px 20% 0px' });
-      observer.observe(lead);
-
-      var resizeTimer;
-      window.addEventListener('resize', function () {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(function () {
-          if (!played) return;
-          buildBars();
-          bars.forEach(function (bar) { bar.classList.add('is-filled'); });
-        }, 150);
-      });
-    })();
-
-  </script>
 
   <script>
     (function () {
