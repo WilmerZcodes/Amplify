@@ -1178,12 +1178,29 @@
 
       var ORDERS_KEY = 'amplifyOrders';
 
+      // Byt ut mot din Google Apps Script-webbapp-URL (se instruktioner) för att
+      // skicka varje order till ett delat Google Kalkylark. Lämna orörd för att
+      // bara spara lokalt i webbläsaren.
+      var SHEETS_WEBHOOK_URL = 'SÄTT_IN_DIN_APPS_SCRIPT_URL_HÄR';
+
       function saveOrder(order) {
         try {
           var raw = localStorage.getItem(ORDERS_KEY);
           var orders = raw ? JSON.parse(raw) : [];
           orders.push(order);
           localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
+        } catch (e) {}
+      }
+
+      function sendOrderToSheet(order) {
+        if (!SHEETS_WEBHOOK_URL || SHEETS_WEBHOOK_URL.indexOf('SÄTT_IN_DIN') === 0) return;
+        try {
+          fetch(SHEETS_WEBHOOK_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'text/plain' },
+            body: JSON.stringify(order)
+          });
         } catch (e) {}
       }
 
@@ -1310,13 +1327,15 @@
           if (cartEmailError) cartEmailError.hidden = true;
 
           var orderTotal = cart.reduce(function (sum, item) { return sum + (item.price || 0); }, 0);
-          saveOrder({
+          var order = {
             email: email,
             items: cart.slice(),
             ufDiscount: ufDiscount,
             total: ufDiscount ? Math.round(orderTotal * 0.5) : orderTotal,
             date: new Date().toISOString()
-          });
+          };
+          saveOrder(order);
+          sendOrderToSheet(order);
 
           if (cartItemsEl) cartItemsEl.hidden = true;
           if (cartEmptyEl) cartEmptyEl.hidden = true;
