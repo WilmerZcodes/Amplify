@@ -744,7 +744,7 @@
       // Byt ut mot din Google Apps Script-webbapp-URL (se instruktioner) för att
       // skicka varje order till ett delat Google Kalkylark. Lämna orörd för att
       // bara spara lokalt i webbläsaren.
-      var SHEETS_WEBHOOK_URL = 'SÄTT_IN_DIN_APPS_SCRIPT_URL_HÄR';
+      var SHEETS_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbyQADxQKekxdzo7Depbp845OA5zw0uDOYncVe6avSRxI-D3D-tPWc2_jnw_BLp4dFBnSA/exec';
 
       function saveOrder(order) {
         try {
@@ -763,7 +763,7 @@
             mode: 'no-cors',
             headers: { 'Content-Type': 'text/plain' },
             body: JSON.stringify(order)
-          });
+          }).catch(function () {});
         } catch (e) {}
       }
 
