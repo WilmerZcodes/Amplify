@@ -1050,9 +1050,9 @@
           var dist = Math.abs(pos[i] - from);
           var duration = Math.max(300, Math.min(900, dist * 1.1));
           await growTo(pos[i], duration);
-          if (i === 1) revealServiceList();
           revealBadge(headings[i]);
           await wait(POP_DURATION);
+          if (i === 1) revealServiceList();
           if (i === headings.length - 1) {
             await growTo(rail.offsetHeight, 250);
           }
