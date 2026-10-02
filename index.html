@@ -425,7 +425,7 @@
 
   .service-list li {
     position: relative;
-    padding-left: 1.3em;
+    padding-left: 1.35rem;
     font-family: "Jost", Arial, sans-serif;
     font-weight: 300;
     font-size: clamp(0.95rem, 1.6vw, 1.15rem);
@@ -436,6 +436,20 @@
   .service-list li.is-flagship {
     font-weight: 700;
     font-size: clamp(1.2rem, 2.6vw, 1.6rem);
+    margin: 1.3rem 0 1.5rem;
+  }
+
+  .service-list li.is-flagship.is-visible {
+    animation: service-float 3.2s ease-in-out infinite;
+  }
+
+  @keyframes service-float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-6px);
+    }
   }
 
   .service-list li::before {
@@ -488,6 +502,11 @@
       animation: none;
       opacity: 1;
       transform: scale(1) rotate(0deg);
+    }
+
+    .service-list li.is-flagship.is-visible {
+      animation: none;
+      transform: none;
     }
 
     .service-text {
